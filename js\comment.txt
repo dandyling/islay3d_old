@@ -1,0 +1,13 @@
+Regarding exporting dae files using Rokdebone and Vixar Motion:	
+
+Question: Every tag in droid.dae is correct! There must be something wrong in the processing of the geometry!
+Answer: With Rokdebone, you need to include uv mapping while exporting to collada for files with texture
+
+Question: How to get multiple key inputs other than 'a' and 'b' to work?
+Answer: Add the following 'z', 's', 'x', 'd', 'c', 'f', 'v' for the corresponding key inputs at the following lines
+
+			this._keybind = enchant.ENV.KEY_BIND_TABLE || {};
+
+            var c = 0;
+            ['left', 'right', 'up', 'down', 'space', 'a', 'b', 'z', 's', 'x', 'd', 'c', 'f', 'v'].forEach(function(type) {
+                this.addEventListener(type + 'buttondown', function(e) {
