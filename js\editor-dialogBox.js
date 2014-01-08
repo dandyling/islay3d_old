@@ -314,7 +314,7 @@ var DialogBoxWithThumbnails = function(config) {
 
 var DialogBoxWithAddThumbnails = function(config) {
 	var m2 = 8;
-	var topMargin = 80;
+	var topMargin = 65;
 	var bottomMargin = 60;
 
 	var dialogBox = new DialogBox(config);
@@ -336,16 +336,14 @@ var DialogBoxWithAddThumbnails = function(config) {
 
 	dialogBox.selectPanels = new Kinetic.Group();
 
-	var addSelectPanel = function(config) {
+	var addSelectPanel = function(configSelect) {
 		var m3 = 4;
 		var mText = 8;
 		var panel = new Kinetic.Group();
-		panel.config = config;
+		panel.config = configSelect;
 
 		panel.width = 60;
 		panel.height = 45;
-
-		panel.on('click', config.onClick);
 
 		var preview = new Image();
 		preview.onload = function() {
@@ -363,18 +361,60 @@ var DialogBoxWithAddThumbnails = function(config) {
 				width : panel.width,
 				height : panel.height,
 				fillPatternImage : preview,
-				fillPatternScale : config.scale,
+				fillPatternScale : configSelect.scale,
 				stroke : '#222222',
 				strokeWidth : 1
 			});
 			panel.add(rectPanel);
 
-			if (config.onMouseOver != undefined) {
-				rectPanel.on('mouseover', config.onMouseOver);
-			}
-			if (config.onMouseOut != undefined) {
-				rectPanel.on('mouseout', config.onMouseOut);
-			}
+			rectPanel.on('mouseover', function(e) {
+			    document.body.style.cursor = 'pointer';
+			    
+				var layer = stage.get('#group-create')[0].getParent();
+				var tooltip = new Kinetic.Label({
+					x : this.getAbsolutePosition().x - 4,
+					y : this.getAbsolutePosition().y - 4,
+					opacity : 0.75
+				});
+				tooltip.add(new Kinetic.Tag({
+					fill : 'white',
+					shadowColor : 'black',
+					shadowBlur : 10,
+					shadowOffset : 10,
+					shadowOpacity : 0.5
+				}));
+				tooltip.add(new Kinetic.Text({
+					text : configSelect.name,
+					fontFamily : 'Calibri',
+					fontSize : 14,
+					padding : 5,
+					fill : 'black'
+				}));
+				tooltip.setOffsetY(tooltip.get('Text')[0].getHeight());
+	
+				layer.tooltips.push(tooltip);
+				layer.add(tooltip);
+				tooltip.draw();
+			});
+			
+			rectPanel.on('mouseout', function(e) {
+			    document.body.style.cursor = cursor;
+			    
+				var layer = stage.get('#group-create')[0].getParent();
+				while (layer.tooltips.length != 0) {
+					var tooltip = layer.tooltips.pop();
+					tooltip.destroy();
+				}
+				layer.draw();
+			});
+			
+			rectPanel.on('click', function(){
+				addPanel({
+					name : configSelect.name,
+					path : configSelect.path,
+					scale : 0.5,
+				});
+			});
 
 			rectPanel.superDestroy = rectPanel.destroy;
 			rectPanel.destroy = function() {
@@ -382,19 +422,6 @@ var DialogBoxWithAddThumbnails = function(config) {
 				rectPanel.superDestroy();
 			};
 
-			/*var simpleText = new Kinetic.Text({
-			 x : rectPanel.getX() + panel.width / 2,
-			 y : rectPanel.getY() + panel.height + 2,
-			 text : config.name.replace(config.mime, ""),
-			 fontStyle : 'bold',
-			 fontSize : 9,
-			 fontFamily : 'sans-serif',
-			 fill : 'black',
-			 align : 'center',
-			 shadowOpacity : 0.5,
-			 });
-			 simpleText.setOffsetX(Math.round(simpleText.getWidth() / 2));
-			 panel.add(simpleText);*/
 			dialogBox.selectPanels.add(panel);
 			/*if (dialogBox.panels.getHeight() < rect2.getHeight()) {
 			 dialogBox.scrollBar.hide();
@@ -405,7 +432,7 @@ var DialogBoxWithAddThumbnails = function(config) {
 
 			dialogBox.getParent().draw();
 		};
-		preview.src = config.path;
+		preview.src = configSelect.path;
 	};
 
 	var setSelectThumbnails = function() {
@@ -413,27 +440,10 @@ var DialogBoxWithAddThumbnails = function(config) {
 		for (var i = 0; i < characterPanels.length; i++) {
 			addSelectPanel({
 				name : characterPanels[i].getId(),
-				
+				path : characterPanels[i].path,
+				scale : config.thumbnailsSelect.scale,
 			});
 		}
-
-		readdir({
-			path : config.thumbnailsSelect.path,
-			mime : config.thumbnailsSelect.mime,
-			callback : function(thumbnailsSelect) {
-				for (var i = 0; i < thumbnailsSelect.length; i++) {
-					addSelectPanel({
-						name : thumbnailsSelect[i].replace('.png', ""),
-						mime : '.png',
-						path : config.thumbnailsSelect.path + thumbnailsSelect[i],
-						scale : config.thumbnailsSelect.scale,
-						onClick : config.thumbnailsSelect.onClick,
-						onMouseOver : config.thumbnailsSelect.onMouseOver,
-						onMouseOut : config.thumbnailsSelect.onMouseOut,
-					});
-				}
-			}
-		});
 	};
 
 	rectSelectInner.add(rectSelect);
@@ -441,6 +451,8 @@ var DialogBoxWithAddThumbnails = function(config) {
 	dialogBox.add(rectSelectInner);
 
 	setSelectThumbnails();
+	
+	/******************* Code for Group follows **********************/
 
 	var rect2 = new Kinetic.Rect({
 		x : rect.getX() + m2,
@@ -507,6 +519,21 @@ var DialogBoxWithAddThumbnails = function(config) {
 		}
 		return widthMax - widthMin;
 	};
+	dialogBox.panels.arrange = function(){
+		var m3 = 4;
+		var children = dialogBox.panels.getChildren();
+		for (var i = 0; i < children.length; i++) {
+			var panel = children[i];
+			var column = i % 5;
+			var row = Math.floor(i / 5);
+			var posX = rect2.getX() + m2 + (panel.width + m3 * 2 + m2) * column;
+			var posY = rect2.getY() + m2 + (panel.width + m3 * 3) * row;
+			
+			panel.setX(posX);	
+			panel.setY(posY);		
+		}
+		dialogBox.draw();
+	};
 
 	var addPanel = function(config) {
 		var m3 = 4;
@@ -516,6 +543,10 @@ var DialogBoxWithAddThumbnails = function(config) {
 
 		panel.width = 100;
 		panel.height = 75;
+		var column = dialogBox.panels.getChildren().length % 5;
+		var row = Math.floor(dialogBox.panels.getChildren().length / 5);
+		panel.setX(rect2.getX() + m2 + (panel.width + m3 * 2 + m2) * column);
+		panel.setY(rect2.getY() + m2 + (panel.width + m3 * 3) * row);
 
 		panel.on('click', config.onClick);
 
@@ -525,15 +556,7 @@ var DialogBoxWithAddThumbnails = function(config) {
 				image : preview
 			});
 
-			var column = dialogBox.panels.getChildren().length % 5;
-			var row = Math.floor(dialogBox.panels.getChildren().length / 5);
-
-			var posX = rect2.getX() + m2 + (panel.width + m3 * 2 + m2) * column;
-			var posY = rect2.getY() + m2 + (panel.width + m3 * 3) * row;
-
 			var rectFrame = new Kinetic.Rect({
-				x : posX,
-				y : posY,
 				width : panel.width + m3 * 2,
 				height : panel.height + m3 * 3 + mText,
 				stroke : 'black',
@@ -557,12 +580,18 @@ var DialogBoxWithAddThumbnails = function(config) {
 			});
 			panel.add(rectPanel);
 
-			if (config.onMouseOver != undefined) {
-				rectPanel.on('mouseover', config.onMouseOver);
-			}
-			if (config.onMouseOut != undefined) {
-				rectPanel.on('mouseout', config.onMouseOut);
-			}
+			rectPanel.on('mouseover', function(e) {
+			    document.body.style.cursor = 'pointer';
+			});
+			
+			rectPanel.on('mouseout', function(e) {
+			    document.body.style.cursor = cursor;
+			});
+			
+			rectPanel.on('click', function(e) {
+				rectPanel.getParent().destroy();
+				dialogBox.panels.arrange();
+			});
 
 			rectPanel.superDestroy = rectPanel.destroy;
 			rectPanel.destroy = function() {
@@ -592,11 +621,12 @@ var DialogBoxWithAddThumbnails = function(config) {
 			}
 
 			dialogBox.getParent().draw();
+			
 		};
 		preview.src = config.path;
 	};
 
-	var setThumbnails = function() {
+	/*var setThumbnails = function() {
 		readdir({
 			path : config.thumbnails.path,
 			mime : config.thumbnails.mime,
@@ -614,7 +644,7 @@ var DialogBoxWithAddThumbnails = function(config) {
 				}
 			}
 		});
-	};
+	};*/
 
 	var rectInner = new Kinetic.Group({
 		clip : [rect2.getX() + 1, rect2.getY() + 1, rect2.getWidth() - 2, rect2.getHeight() - 2]
@@ -625,7 +655,7 @@ var DialogBoxWithAddThumbnails = function(config) {
 	rectInner.add(dialogBox.scrollBar);
 	dialogBox.add(rectInner);
 
-	setThumbnails();
+	//setThumbnails();
 
 	return dialogBox;
 };

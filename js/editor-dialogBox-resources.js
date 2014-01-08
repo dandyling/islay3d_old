@@ -261,131 +261,12 @@ dialogBoxResources['group-create'] = {
 		path : 'users/Google105162652429509013137/models/',
 		mime : '.png',
 		scale : 0.3,
-		onMouseOver : function(e) {
-		    document.body.style.cursor = 'pointer';
-		    
-			var layer = stage.get('#group-create')[0].getParent();
-			var tooltip = new Kinetic.Label({
-				x : this.getAbsolutePosition().x - 4,
-				y : this.getAbsolutePosition().y - 4,
-				opacity : 0.75
-			});
-			tooltip.add(new Kinetic.Tag({
-				fill : 'white',
-				shadowColor : 'black',
-				shadowBlur : 10,
-				shadowOffset : 10,
-				shadowOpacity : 0.5
-			}));
-			$.ajax({
-				url : this.getParent().config.path.replace('png', 'desc'),
-				success : function(data) {
-					tooltip.add(new Kinetic.Text({
-						text : data,
-						fontFamily : 'Calibri',
-						fontSize : 14,
-						padding : 5,
-						fill : 'black'
-					}));
-					tooltip.setOffsetY(tooltip.get('Text')[0].getHeight());
-
-					layer.tooltips.push(tooltip);
-					layer.add(tooltip);
-					tooltip.draw();
-				}
-			});
-
-		},
-		onMouseOut : function(e) {
-		    document.body.style.cursor = cursor;
-		    
-			var layer = stage.get('#group-create')[0].getParent();
-			while (layer.tooltips.length != 0) {
-				var tooltip = layer.tooltips.pop();
-				tooltip.destroy();
-			}
-			layer.draw();
-		},
-		onClick : function(e) {
-			var panels = this.getParent().getChildren();
-			panels.each(function(p) {
-				p.rectFrame.setFill('white');
-			});
-			this.rectFrame.setFill('#00FFFF');
-
-			addCharacterPanel({
-				name : this.config.name,
-				pathImage : this.config.path,
-				pathModel : this.config.path.replace('png', 'dae')
-			});
-
-			dialogBoxes.close();
-		},
 	},
 	thumbnails : {
 		path : 'users/Google105162652429509013137/models/',
 		mime : '.png',
 		scale : 0.5,
-		onMouseOver : function(e) {
-		    document.body.style.cursor = 'pointer';
-		    
-			var layer = stage.get('#group-create')[0].getParent();
-			var tooltip = new Kinetic.Label({
-				x : this.getAbsolutePosition().x - 4,
-				y : this.getAbsolutePosition().y - 4,
-				opacity : 0.75
-			});
-			tooltip.add(new Kinetic.Tag({
-				fill : 'white',
-				shadowColor : 'black',
-				shadowBlur : 10,
-				shadowOffset : 10,
-				shadowOpacity : 0.5
-			}));
-			$.ajax({
-				url : this.getParent().config.path.replace('png', 'desc'),
-				success : function(data) {
-					tooltip.add(new Kinetic.Text({
-						text : data,
-						fontFamily : 'Calibri',
-						fontSize : 14,
-						padding : 5,
-						fill : 'black'
-					}));
-					tooltip.setOffsetY(tooltip.get('Text')[0].getHeight());
-
-					layer.tooltips.push(tooltip);
-					layer.add(tooltip);
-					tooltip.draw();
-				}
-			});
-
-		},
-		onMouseOut : function(e) {
-		    document.body.style.cursor = cursor;
-		    
-			var layer = stage.get('#group-create')[0].getParent();
-			while (layer.tooltips.length != 0) {
-				var tooltip = layer.tooltips.pop();
-				tooltip.destroy();
-			}
-			layer.draw();
-		},
-		onClick : function(e) {
-			var panels = this.getParent().getChildren();
-			panels.each(function(p) {
-				p.rectFrame.setFill('white');
-			});
-			this.rectFrame.setFill('#00FFFF');
-
-			addCharacterPanel({
-				name : this.config.name,
-				pathImage : this.config.path,
-				pathModel : this.config.path.replace('png', 'dae')
-			});
-
-			dialogBoxes.close();
-		},
+		
 	},
 	callback : function() {
 		var layer = stage.get('#group-create')[0].getParent();
@@ -472,7 +353,6 @@ dialogBoxResources['character-import-model'] = {
 			dialog.superDestroy();
 			$('#divprogressbar').remove();
 		};
-
 	}
 };
 

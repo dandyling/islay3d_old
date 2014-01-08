@@ -54,6 +54,8 @@ stage.showHitCanvas = function(layer) {
 	};
 };
 
+stage.group = new Array();
+
 var addIcon = function(config) {
 	config.iconSize = (config.iconSize == undefined) ? 32 : config.iconSize;
 	config.fontSize = (config.fontSize == undefined) ? 9 : config.fontSize;
