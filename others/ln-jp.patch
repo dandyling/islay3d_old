@@ -1,0 +1,1025 @@
+=== modified file 'js/editor-avatar.js'
+--- js/editor-avatar.js	2013-11-14 17:51:27 +0000
++++ js/editor-avatar.js	2013-11-25 08:14:39 +0000
+@@ -59,7 +59,7 @@
+ 		text : config.text
+ 	});
+ 	bubble.add(text);
+-
++	
+ 	var buttonX;
+ 	var imageObj2 = new Image();
+ 	imageObj2.onload = function() {
+@@ -97,10 +97,10 @@
+ 		width : 60,
+ 		height : 20,
+ 		layer : bubble,
+-		text : 'Next',
++		text : 'つぎへ',
+ 		isMain : true,
+ 		onClick : function() {
+-			avatar.say("First, let's add a new character to the game.\nClick on the \"Create Characters\" button.");
++			avatar.say("まず、あたらしいキャラクターを追加してみましょう。\n\"キャラクターをつくる\"ボタンをクリックしてください。");
+ 			button1.hide();
+ 			var tween = new Kinetic.Tween({
+ 				node : stage.get('#pointerAvatar')[0],
+@@ -191,7 +191,7 @@
+ 	var click15 = function() {
+ 		stage.get('#buttonRun')[0].fire('click');
+ 		marker.hide();
+-		avatar.say("PRESS LEFT KEY\n\nCongratulations, you have made your game interactive!\n\n");
++		avatar.say("\n\n\nおめでとう、ゲームをインタラクティブにすることができました！\n\n");
+ 		var button = avatar.get('#buttonBubbleNext')[0];
+ 		button.rect.setX(-avatar.get('Tag')[0].getWidth() / 2 - 30 - 15);
+ 		var text = button.get('Text')[0];
+@@ -206,7 +206,6 @@
+ 			layer.draw();
+ 			avatar.get('#buttonBubbleClose')[0].fire('click');
+ 		});
+-		pointer.show();
+ 		var tween = new Kinetic.Tween({
+ 			node : pointer,
+ 			duration : 1,
+@@ -221,7 +220,7 @@
+ 
+ 	var click14 = function() {
+ 		stage.get('#buttonOK')[0].fire('click');
+-		avatar.say("DRAW A RETURN ARROW\n\nClick on the second circle and drag\nit to return to the first circle.");
++		avatar.say("もどるやじるしをかく\n\n２個目の丸をクリックしたまま、１個目の丸にドラッグして、\n\n最初の動きにもどってくるようにします。");
+ 		marker.hide();
+ 		marker.draw();
+ 		setTimeout(function() {
+@@ -282,6 +281,7 @@
+ 
+ 			stage.on('arrow-created', function(arrow) {
+ 				marker1.destroy();
++				
+ 				layerDiagram.draw();
+ 				var functionBar = stage.get('#rectFunctionBar')[0];
+ 				var tween = new Kinetic.Tween({
+@@ -293,12 +293,13 @@
+ 					onFinish : pointer.setCenterX
+ 				});
+ 				tween.play();
+-				avatar.say("RUN THE GAME\n\nNow, run the game and see");
++				avatar.say("それじゃあ、ゲームを実行してみよう。\n\nその後で、キーボードの「←」キーをおして、\nまた動きを確認してみましょう。");
+ 				marker.setX(functionBar.getX() + 38);
+ 				marker.setY(functionBar.getY() + 360);
+ 				marker.off('click');
+ 				marker.on('click', click15);
+ 				marker.show();
++				pointer.show();
+ 				layer.draw();
+ 			});
+ 		}, 1000);
+@@ -323,12 +324,12 @@
+ 		tween.play();
+ 		marker.off('click');
+ 		marker.on('click', click14);
+-		avatar.say("Choose the LEFT keyboard key,\nthen press OK");
++		avatar.say("ボックス中の「←」をえらんで、OKをおしてください。\n\nそうすると、もし「←」のキーをおすとき、\nキャラクターは前に決まった２個目の動きをする。");
+ 	};
+ 
+ 	var click12 = function() {
+ 		stage.get('#buttonArrow')[0].fire('click');
+-		avatar.say("DRAW AN ARROW\n\nClick on the first circle and drag\nto the second circle.");
++		avatar.say("やじるしをかく\n\n1つ目の丸をクリックしたまま、、\n２つ目の丸までドラッグしてください。");
+ 		setTimeout(function() {
+ 			pointer.hide();
+ 			var marker1 = marker.clone();
+@@ -393,7 +394,7 @@
+ 			stage.on('arrow-created', function(arrow) {
+ 				marker1.destroy();
+ 				layerDiagram.draw();
+-				avatar.say("SET CONDITION FOR ARROW\n\nNow, select a conditon by clicking the Key button.");
++				avatar.say("やじるしのじょうけんをきめる\n\n「キー」ボタンをクリックしてじょうけんをせんたくします。");
+ 				var toolbar = stage.get('#rectDiagramEditor')[0];
+ 				pointer.setX(toolbar.getWidth() / 2 - 80);
+ 				pointer.setY(toolbar.getHeight() + 15);
+@@ -414,7 +415,7 @@
+ 
+ 	var click11 = function() {
+ 		stage.get('#actionToolbar')[0].dialog.get('#buttonOK')[0].fire('click');
+-		avatar.say("DRAW ARROW\n\nNow, let's connect the two actions\nby drawing an arrow.\nClick on the arrow tool.");
++		avatar.say("やじるしをかく\n\nつぎに、矢印を書いてふたつの動きをつなげてみましょう。\n矢印ツールをクリックしてください。");
+ 		var drawingToolbar = stage.get('#groupDrawingToolbar')[0];
+ 		var tween = new Kinetic.Tween({
+ 			node : pointer,
+@@ -446,7 +447,7 @@
+ 		$(toolbar.dialog.inputZr).animate({
+ 			backgroundColor : "#C33745"
+ 		}, 500);
+-		avatar.say("MOVES THE CHARACTER\n\nIncrement the value of the text box.\nObserve how the character moves.");
++		avatar.say("キャラクターをうごかす\n\nテキストボックスの数字を\nふやしてみてください。キャラクターがどんなふうに\nうごくか確認しましょう。");
+ 		marker.setX(toolbar.dialog.getX() + 142);
+ 		marker.setY(toolbar.dialog.getY() + 150);
+ 		marker.off('click');
+@@ -476,7 +477,7 @@
+ 		marker.setStrokeEnabled(false);
+ 		marker.setX(toolbar.getX() + 25);
+ 		marker.setY(toolbar.getY() + 25);
+-		avatar.say("DEFINE SECOND ACTION\n\nLet's define another action for the second circle.\nClick on the Move action.");
++		avatar.say("２個目の動きをきめる\n\n２個目のまるの動きをきめましょう。\n「うごかす」しるしの所をクリックしてください。");
+ 		marker.off('click');
+ 		marker.on('click', click10);
+ 	};
+@@ -485,7 +486,7 @@
+ 		stage.get('#buttonRun')[0].fire('click');
+ 		pointer.hide();
+ 		marker.hide();
+-		avatar.say("CONGRATULATIONS!!\n\nYou got your first game running!");
++		avatar.say("おめでとう!!\n\nゲームできた!");
+ 		setTimeout(function() {
+ 			pointer.setX(550);
+ 			pointer.setY(150);
+@@ -501,7 +502,7 @@
+ 			marker.show();
+ 			marker.off('click');
+ 			marker.on('click', click9);
+-			avatar.say("DRAW A SECOND CIRCLE\n\nNow, let's draw another circle.");
++			avatar.say("２個目のまるをかく\n\nこんどは、２個目のまるを書いてみましょう。");
+ 		}, 1000);
+ 	};
+ 
+@@ -517,7 +518,7 @@
+ 			onFinish : pointer.setCenterX
+ 		});
+ 		tween.play();
+-		avatar.say("RUN THE GAME\n\nNow, run the game and see");
++		avatar.say("ゲームをはじめよう！\n\nそれじゃあ、ゲームを実行して、動きを確認してみましょう。");
+ 		marker.setX(functionBar.getX() + 38);
+ 		marker.setY(functionBar.getY() + 360);
+ 		marker.off('click');
+@@ -539,7 +540,7 @@
+ 		$(toolbar.dialog.inputY).animate({
+ 			backgroundColor : "#C33745"
+ 		}, 500);
+-		avatar.say("MOVES THE CHARACTER\n\nIncrement the value of the text box.\nSee how the character moves.");
++		avatar.say("キャラクターをうごかす\n\nテキストボックスの数字を\nふやしてみてください。キャラクターが\nどんなふうにうごくか、確認しましょう。");
+ 		marker.setX(toolbar.dialog.getX() + 142);
+ 		marker.setY(toolbar.dialog.getY() + 150);
+ 		marker.off('click');
+@@ -569,7 +570,7 @@
+ 		marker.setStrokeEnabled(false);
+ 		marker.setX(toolbar.getX() + 25);
+ 		marker.setY(toolbar.getY() + 25);
+-		avatar.say("DEFINE AN ACTION\n\nLet's define an action for the circle.\nClick on the Move action.");
++		avatar.say("動きをきめる\n\nこのまるの動きをきめましょう。\n「うごかす」アクションをクリックしてください。");
+ 		marker.off('click');
+ 		marker.on('click', click6);
+ 	};
+@@ -601,13 +602,13 @@
+ 			marker.setScale(amplitude * Math.sin(frame.time * 2 * Math.PI / period) + 2);
+ 		}, layer);
+ 		marker.animation.start();
+-		avatar.say('Click on the point indicated to draw a circle.');
++		avatar.say('あかいまるでかこまれたところを\nクリックすると、まるがひょうじされます。');
+ 		marker.off('click');
+ 		marker.on('click', click5);
+ 	};
+ 
+ 	var click3 = function() {
+-		avatar.say("Congratulations!!\nYou have successfully added a character to the game.");
++		avatar.say("おめでとう！！\n\nキャラクターをゲームについかできました。");
+ 		marker.hide();
+ 		pointer.hide();
+ 		setTimeout(function() {
+@@ -622,7 +623,7 @@
+ 			pointer.setRotation(0);
+ 			pointer.show();
+ 			pointer.setCenterX();
+-			avatar.say("DRAW DIAGRAM\n\nNow, let's start to draw a diagram\nby selecting the circle tool.");
++			avatar.say("キャラクターを動かしてみよう\n\nこんどは、サークルツールを\nえらんで動きをつくりましょう。");
+ 			marker.off('click');
+ 			marker.on('click', click4);
+ 		}, 1000);
+@@ -661,7 +662,7 @@
+ 			onFinish : pointer.setCenterX
+ 		});
+ 		tween.play();
+-		avatar.say("Next, choose a 3D model");
++		avatar.say("つぎに、すきなキャラクターを選んでください");
+ 		marker.hide();
+ 		stage.get('#character-create')[0].panels.on('mousedown', click3);
+ 	};
+@@ -675,12 +676,13 @@
+ (function() {
+ 	var avatar = new Avatar({
+ 		id : 'islayAvatar',
++		name : 'label',
+ 		source : 'img/avatar/islayAvatar.png',
+ 		x : window.innerWidth - 200,
+ 		y : window.innerHeight - 180,
+ 		width : 100,
+ 		height : 100,
+-		text : "WELCOME!!\n\n Hi, I am Islay, the avatar.  First time user?\nLet me help you to get around.\n\n"
++		text : "ようこそ！！\n\nこんにちは、ぼくはアイラ。はじめてのユーザーですか？\nぼくが使いかたを説明します。\n\n",
+ 	});
+ 
+ 	var buttonPos = avatar.get('#buttonBubbleNext')[0].rect.getAbsolutePosition();
+
+=== modified file 'js/editor-dialogBox-resources.js'
+--- js/editor-dialogBox-resources.js	2013-11-14 17:21:10 +0000
++++ js/editor-dialogBox-resources.js	2013-11-25 08:14:39 +0000
+@@ -73,11 +73,11 @@
+ 				};
+ 
+ 				if (!(/\.(dae)$/i).test(uploadFile.name)) {
+-					alert('You must select a .dae file only');
++					alert('daeファイルを選んでください');
+ 					goUpload = false;
+ 				}
+ 				if (uploadFile.size > 20000000) {// 20mb
+-					common.notifyError('Please upload a smaller file, max size is 20 MB');
++					common.notifyError('20 MBより小さいファイルを選んでください');
+ 					goUpload = false;
+ 				}
+ 				if (goUpload == true) {
+@@ -125,7 +125,7 @@
+ var dialogBoxResources = {};
+ dialogBoxResources['character-create'] = {
+ 	id : 'character-create',
+-	title : 'Please choose a 3D model:',
++	title : 'キャラクターをえらんでください：',
+ 	width : 630,
+ 	height : 340,
+ 	buttons : [{
+@@ -133,13 +133,13 @@
+ 		y : Math.round(window.innerHeight / 2 + 340 / 2) - 40,
+ 		width : 150,
+ 		height : 28,
+-		text : 'Import Model',
++		text : 'モデルをとりこむ',
+ 		isMain : true,
+ 		onClick : function() {
+ 			if (stage.get('#labelUserName')[0].getText() == "") {
+ 				var dialog = new DialogLogin();
+ 				var text = dialog.get('Text')[0];
+-				text.setText('Please login:');
++				text.setText('ログイン');
+ 				text.setOffsetX(text.getWidth() / 2);
+ 				dialog.draw();
+ 			} else {
+@@ -151,7 +151,7 @@
+ 		y : Math.round(window.innerHeight / 2 + 340 / 2) - 40,
+ 		width : 150,
+ 		height : 28,
+-		text : 'Cancel',
++		text : 'キャンセル',
+ 		onClick : function() {
+ 			dialogBoxes.close();
+ 		}
+@@ -229,7 +229,7 @@
+ 
+ dialogBoxResources['character-import-model'] = {
+ 	id : 'character-import-model',
+-	title : 'Please insert model info:',
++	title : 'モデルのデータ',
+ 	width : 630,
+ 	height : 340,
+ 	buttons : [{
+@@ -245,9 +245,9 @@
+ 			stage.modelName = modelName;
+ 			var modelDescription = $('#import_description').val();
+ 			if (modelName == "") {
+-				alert("Please enter a model name.");
++				alert("モデル名を入力ください");
+ 			} else if (modelDescription == "") {
+-				alert("Please enter a description");
++				alert("モデルはどこから来たか描いてください");
+ 			} else {
+ 				dialogBoxes.close();
+ 				$.ajax({
+@@ -280,7 +280,7 @@
+ 		y : Math.round(window.innerHeight / 2 + 340 / 2) - 40,
+ 		width : 150,
+ 		height : 28,
+-		text : 'Cancel',
++		text : 'キャンセル',
+ 		onClick : function() {
+ 			dialogBoxes.close();
+ 			console.log("php function to delete the uploaded files");
+@@ -343,7 +343,7 @@
+ 
+ dialogBoxResources['character-create-changePanel'] = {
+ 	id : 'character-create-changePanel',
+-	title : 'Please choose a 3D model:',
++	title : 'キャラクターをえらんでください',
+ 	width : 630,
+ 	height : 340,
+ 	buttons : [{
+@@ -351,13 +351,13 @@
+ 		y : Math.round(window.innerHeight / 2 + 340 / 2) - 40,
+ 		width : 150,
+ 		height : 28,
+-		text : 'Import Model',
++		text : 'モデルをとりこむ',
+ 		isMain : true,
+ 		onClick : function() {
+ 			if (stage.get('#labelUserName')[0].getText() == "") {
+ 				var dialog = new DialogLogin();
+ 				var text = dialog.get('Text')[0];
+-				text.setText('Please login:');
++				text.setText('ログインしてください');
+ 				text.setOffsetX(text.getWidth() / 2);
+ 				dialog.draw();
+ 			} else {
+@@ -369,7 +369,7 @@
+ 		y : Math.round(window.innerHeight / 2 + 340 / 2) - 40,
+ 		width : 150,
+ 		height : 28,
+-		text : 'Cancel',
++		text : 'キャンセル',
+ 		onClick : function() {
+ 			dialogBoxes.close();
+ 		}
+
+=== modified file 'js/editor-dialogSmall.js'
+--- js/editor-dialogSmall.js	2013-11-14 17:21:10 +0000
++++ js/editor-dialogSmall.js	2013-11-25 04:42:10 +0000
+@@ -237,7 +237,7 @@
+ 		width: 60,
+ 		height: 20,
+ 		layer: dialog,
+-		text: 'Cancel',
++		text: 'キャンセル',
+ 		onClick: function(){
+ 			dialogBoxes.closeSmallDialogs();
+ 		}
+
+=== modified file 'js/editor-functionBar.js'
+--- js/editor-functionBar.js	2013-11-11 15:17:10 +0000
++++ js/editor-functionBar.js	2013-11-25 00:49:07 +0000
+@@ -32,7 +32,7 @@
+ 		layer : layer,
+ 		id : 'buttonCharacter',
+ 		addText : true,
+-		text : 'Create\nCharacters',
++		text : 'キャラクター\n作成',
+ 		onClick : function() {
+ 			dialogBoxes.close();
+ 			var dialogBox1 = new DialogBoxWithThumbnails(dialogBoxResources['character-create']);
+@@ -46,7 +46,7 @@
+ 		layer : layer,
+ 		id : 'buttonComplex',
+ 		addText : true,
+-		text : 'Create Complex\ncharacters',
++		text : 'コンプレックス体\n作成',
+ 	});
+ 	addIcon({
+ 		x : posX + 23,
+@@ -55,7 +55,7 @@
+ 		layer : layer,
+ 		id : 'buttonGroup',
+ 		addText : true,
+-		text : 'Create Group\nof characters',
++		text : 'グループ作成',
+ 	});
+ 
+ 	var rect2 = new Kinetic.Rect({
+@@ -81,7 +81,7 @@
+ 		layer : layer,
+ 		id : 'buttonWorld',
+ 		addText : true,
+-		text : 'World\nSettings',
++		text : 'ワールド設定',
+ 	});
+ 	//stage.add(layer);
+ 
+@@ -108,7 +108,7 @@
+ 		layer : layer,
+ 		id : 'buttonRun',
+ 		addText : true,
+-		text : 'Start Game',
++		text : '動かす',
+ 		onClick : function() {
+ 			var xml = convertToXML(stage.getXML());
+ 			console.log(xml);
+
+=== modified file 'js/editor-mainPanel-diagramEditor-actionToolbar-resources.js'
+--- js/editor-mainPanel-diagramEditor-actionToolbar-resources.js	2013-11-08 11:29:02 +0000
++++ js/editor-mainPanel-diagramEditor-actionToolbar-resources.js	2013-11-25 06:18:05 +0000
+@@ -20,7 +20,7 @@
+ 	var simpleText = new Kinetic.Text({
+ 		y : 38,
+ 		width : 70,
+-		text : "Move",
++		text : "うごかす",
+ 		fontSize : 16,
+ 	});
+ 	simpleText.setAttrs(simpleTextConfig);
+@@ -28,7 +28,7 @@
+ 	var simpleText2 = new Kinetic.Text({
+ 		y : 78,
+ 		width : 70,
+-		text : "Rotate",
++		text : "かいてん",
+ 		fontSize : 16,
+ 	});
+ 	simpleText2.setAttrs(simpleTextConfig);
+@@ -92,7 +92,7 @@
+ 	var simpleText3 = new Kinetic.Text({
+ 		x : 80,
+ 		y : 108,
+-		text : "Move according to upper coordinate system",
++		text : "上位のざひょうけいにしたがってうごく",
+ 		fontStyle : 'normal',
+ 		fontSize : 12,
+ 		fontFamily : 'sans-serif',
+@@ -125,7 +125,7 @@
+ 		x : 90,
+ 		y : dialog.rect.getY() + 18,
+ 		width : 70,
+-		text : "Jump to: ",
++		text : "ジャンプ: ",
+ 		fontSize : 14,
+ 		fontFamily : 'sans-serif',
+ 		align : 'right',
+@@ -135,7 +135,7 @@
+ 	var simpleText2 = new Kinetic.Text({
+ 		x : 20,
+ 		y : 61,
+-		text : "Enable Axis:",
++		text : "軸:",
+ 		width : 100,
+ 		fontFamily : 'sans-serif',
+ 		align : 'left',
+@@ -219,13 +219,13 @@
+ 		left : simpleText.getX() + simpleText.getWidth(),
+ 		top : simpleText.getY() - 9,
+ 		optionList : {
+-			specific : "specified position",
+-			random : "random position"
++			specific : "決まった場所にジャンプ",
++			random : "どこかにジャンプ"
+ 		}
+ 	});
+-	selectBox.value = "specified position";
++	selectBox.value = "決まった場所にジャンプ";
+ 	selectBox.onchange = function() {
+-		if (selectBox.value == "random position") {
++		if (selectBox.value == "どこかにジャンプ") {
+ 			dialogBoxes.closeSmallDialogs();
+ 			toolbar.dialog = new DialogActionToolbarJumpRandom(toolbar);
+ 			toolbar.setAutoPosition(toolbar.currentState.getX(), toolbar.currentState.getY());
+@@ -255,7 +255,7 @@
+ 		x : 90,
+ 		y : dialog.rect.getY() + 18,
+ 		width : 70,
+-		text : "Jump to: ",
++		text : "ジャンプ: ",
+ 		fontSize : 14,
+ 		fontFamily : 'sans-serif',
+ 		align : 'right',
+@@ -265,7 +265,7 @@
+ 	var simpleText2 = new Kinetic.Text({
+ 		x : 20,
+ 		y : 61,
+-		text : "Enable Axis:",
++		text : "軸:",
+ 		width : 100,
+ 		fontFamily : 'sans-serif',
+ 		align : 'left',
+@@ -330,13 +330,13 @@
+ 		left : simpleText.getX() + simpleText.getWidth(),
+ 		top : simpleText.getY() - 9,
+ 		optionList : {
+-			specific : "specified position",
+-			random : "random position"
++			specific : "決まった場所にジャンプ",
++			random : "どこかにジャンプ"
+ 		},
+ 	});
+-	selectBox.value = "random position";
++	selectBox.value = "どこかにジャンプ";
+ 	selectBox.onchange = function() {
+-		if (selectBox.value == "specified position") {
++		if (selectBox.value == "決まった場所にジャンプ") {
+ 			dialogBoxes.closeSmallDialogs();
+ 			toolbar.dialog = new DialogActionToolbarJump(toolbar);
+ 			toolbar.setAutoPosition(toolbar.currentState.getX(), toolbar.currentState.getY());
+@@ -363,7 +363,7 @@
+ 	var simpleText = new Kinetic.Text({
+ 		x : dialog.rect.getWidth() / 2,
+ 		y : 38,
+-		text : "Reset",
++		text : "リセット",
+ 		fontSize : 16,
+ 		fontFamily : 'sans-serif',
+ 		fontStyle : 'bold',
+@@ -380,13 +380,13 @@
+ 
+ 	var labelX = new Kinetic.Text({
+ 		x : 110,
+-		text : "Movement",
++		text : "移動",
+ 	});
+ 	labelX.setAttrs(labelConfig);
+ 
+ 	var labelY = new Kinetic.Text({
+ 		x : 110 + 110,
+-		text : "Rotation",
++		text : "回転",
+ 	});
+ 	labelY.setAttrs(labelConfig);
+ 
+@@ -437,21 +437,21 @@
+ 	var simpleText = new Kinetic.Text({
+ 		x : 15,
+ 		y : 38,
+-		text : "Send to: ",
++		text : "相手: ",
+ 	});
+ 	simpleText.setAttrs(simpleTextConfig);
+ 
+ 	var simpleText2 = new Kinetic.Text({
+ 		x : 30,
+ 		y : 68,
+-		text : "the ",
++		text : "に ",
+ 	});
+ 	simpleText2.setAttrs(simpleTextConfig);
+ 
+ 	var simpleText3 = new Kinetic.Text({
+ 		x : simpleText2.getX() + simpleText2.getWidth(),
+ 		y : simpleText2.getY(),
+-		text : "Message:",
++		text : "送るメッセージ:",
+ 	});
+ 	simpleTextConfig.fontStyle = "bold";
+ 	simpleText3.setAttrs(simpleTextConfig);
+@@ -475,18 +475,18 @@
+ 	};
+ 
+ 	var MESSAGETYPE = new Object();
+-	MESSAGETYPE["All characters"] = "broadcast";
+-	MESSAGETYPE["Upper level characters (Complex character)"] = "upcast";
+-	MESSAGETYPE["Lower level characters (Complex character)"] = "downcast";
++	MESSAGETYPE["皆におしらせ"] = "broadcast";
++	MESSAGETYPE["上位キャラクターにおしらせ"] = "upcast";
++	MESSAGETYPE["下位キャラクターにおしらせ"] = "downcast";
+ 
+ 	var selectBoxCharacter = new SelectBox({
+ 		name : 'selectbox',
+ 		left : simpleText.getX() + simpleText.getWidth(),
+ 		top : simpleText.getY() - 9,
+ 		optionList : {
+-			all : "All characters",
+-			upper : "Upper level characters (Complex character)",
+-			lower : "Lower level characters (Complex character)"
++			all : "皆におしらせ",
++			upper : "上位キャラクターにおしらせ",
++			lower : "下位キャラクターにおしらせ"
+ 		},
+ 		value : (function() {
+ 			for (var key in MESSAGETYPE) {
+@@ -497,22 +497,22 @@
+ 					return key;
+ 				}
+ 			}
+-			return "All characters";
++			return "皆におしらせ";
+ 		})()
+ 	});
+ 
+ 	var optionList = new Object();
+-	optionList["message1"] = "It's now!";
+-	optionList["message2"] = "Careful!";
+-	optionList["message3"] = "Wait!";
+-	optionList["message4"] = "It's starting!";
+-	optionList["message5"] = "It's here!";
+-	optionList["message6"] = "It's spring";
+-	optionList["message7"] = "It's sunny";
+-	optionList["message8"] = "It's raining";
+-	optionList["message9"] = "It's snowing";
+-	optionList["message10"] = "Here comes the boss!";
+-	optionList["messageCustom"] = "Custom..";
++	optionList["message1"] = "いまだ！";
++	optionList["message2"] = "気をつけて!";
++	optionList["message3"] = "まだだよ";
++	optionList["message4"] = "はじまるよ";
++	optionList["message5"] = "着いたよ";
++	optionList["message6"] = "花が咲いたよ";
++	optionList["message7"] = "晴れてきたよ";
++	optionList["message8"] = "雨がふってきたよ";
++	optionList["message9"] = "雪がふってきたよ";
++	optionList["message10"] = "ボスが来たよ!";
++	optionList["messageCustom"] = "ほかのおしらせ..";
+ 	var selectBoxMessage = new SelectBox({
+ 		name : 'selectbox',
+ 		left : simpleText3.getX() + simpleText3.getWidth(),
+@@ -530,18 +530,18 @@
+ 							return message;
+ 						}
+ 					}
+-					var textField = new TextField("inputTextCustomMessage", "Enter a message here", simpleText3.getX() + simpleText3.getWidth() - 10, simpleText3.getY() - 9 + 30);
++					var textField = new TextField("inputTextCustomMessage", "おしらせを書いてください", simpleText3.getX() + simpleText3.getWidth() - 10, simpleText3.getY() - 9 + 30);
+ 					textField.value = message;
+-					return "Custom..";
++					return "ほかのおしらせ..";
+ 				}
+ 			}
+-			return "It's now!";
++			return "いまだ！";
+ 		})()
+ 	});
+ 	selectBoxMessage.onchange = function() {
+ 		console.log(selectBoxMessage.value);
+ 		if (selectBoxMessage.value == "Custom..") {
+-			var textField = new TextField("inputTextCustomMessage", "Enter a message here", parseInt(selectBoxMessage.style.left) - 10, parseInt(selectBoxMessage.style.top) + 30);
++			var textField = new TextField("inputTextCustomMessage", "おしらせを書いてください", parseInt(selectBoxMessage.style.left) - 10, parseInt(selectBoxMessage.style.top) + 30);
+ 		} else {
+ 			if (document.getElementById("inputTextCustomMessage") != undefined) {
+ 				inputDivParent.removeChild(document.getElementById("inputTextCustomMessage"));
+@@ -568,7 +568,7 @@
+ 	var simpleText = new Kinetic.Text({
+ 		x : 50,
+ 		y : dialog.rect.getY() + dialog.rect.getHeight() / 2 - 10,
+-		text : "Become the parent of the group ",
++		text : "グループの親になる",
+ 		fontFamily : 'sans-serif',
+ 		fill : 'black',
+ 		fontStyle : 'normal',
+@@ -620,7 +620,7 @@
+ 	var simpleText = new Kinetic.Text({
+ 		x : 80,
+ 		y : dialog.rect.getY() + 15,
+-		text : "Change into: ",
++		text : "変わる",
+ 		fontFamily : 'sans-serif',
+ 		fill : 'black',
+ 		fontStyle : 'normal',
+@@ -719,12 +719,12 @@
+ 	};
+ 
+ 	var OPTIONTYPE = new Object();
+-	OPTIONTYPE["Appear"] = "show";
+-	OPTIONTYPE["Hide"] = "hide";
+-	OPTIONTYPE["Disappear"] = "exit";
+-	OPTIONTYPE["The End"] = "finish";
++	OPTIONTYPE["現れる"] = "show";
++	OPTIONTYPE["隠れる"] = "hide";
++	OPTIONTYPE["いなくなる"] = "exit";
++	OPTIONTYPE["アニメーションを終了させる"] = "finish";
+ 
+-	var buttonRadio = new ButtonRadio('buttonRadio', 100, 100, ["Appear", "Hide", "Disappear", "The End"], getDefaultButton());
++	var buttonRadio = new ButtonRadio('buttonRadio', 100, 100, ["現れる", "隠れる", "いなくなる", "アニメーションを終了させる"], getDefaultButton());
+ 
+ 	buttonRadio.getClicked = function() {
+ 		var childButtons = buttonRadio.getElementsByTagName("input");
+
+=== modified file 'js/editor-mainPanel-diagramEditor-actionToolbar.js'
+--- js/editor-mainPanel-diagramEditor-actionToolbar.js	2013-11-08 11:29:02 +0000
++++ js/editor-mainPanel-diagramEditor-actionToolbar.js	2013-11-25 06:18:05 +0000
+@@ -50,7 +50,7 @@
+ 		id : 'buttonActionMove',
+ 		name : 'button',
+ 		addText : true,
+-		text : 'Move',
++		text : 'うごかす',
+ 		effect3D : true,
+ 		onClick : function() {
+ 			toolbar.toggle(this);
+@@ -73,7 +73,7 @@
+ 		id : 'buttonActionJump',
+ 		name : 'button',
+ 		addText : true,
+-		text : 'Jump',
++		text : 'ジャンプ',
+ 		effect3D : true,
+ 		onClick : function() {
+ 			toolbar.toggle(this);
+@@ -102,7 +102,7 @@
+ 		id : 'buttonActionReset',
+ 		name : 'button',
+ 		addText : true,
+-		text : 'Reset',
++		text : 'リセット',
+ 		effect3D : true,
+ 		onClick : function() {
+ 			toolbar.toggle(this);
+@@ -136,7 +136,7 @@
+ 		id : 'buttonActionMessage',
+ 		name : 'button',
+ 		addText : true,
+-		text : 'Message',
++		text : 'おしらせ',
+ 		effect3D : true,
+ 		onClick : function() {
+ 			toolbar.toggle(this);
+@@ -159,7 +159,7 @@
+ 		id : 'buttonActionFork',
+ 		name : 'button',
+ 		addText : true,
+-		text : 'Fork',
++		text : '親になる',
+ 		effect3D : true,
+ 		onClick : function() {
+ 			toolbar.toggle(this);
+@@ -182,7 +182,7 @@
+ 		id : 'buttonActionChange',
+ 		name : 'button',
+ 		addText : true,
+-		text : 'Change',
++		text : '変わる',
+ 		effect3D : true,
+ 		onClick : function() {
+ 			toolbar.toggle(this);
+@@ -205,7 +205,7 @@
+ 		id : 'buttonActionTransform',
+ 		name : 'button',
+ 		addText : true,
+-		text : 'Transform',
++		text : 'へんかく',
+ 		effect3D : true,
+ 		onClick : function() {
+ 			toolbar.toggle(this);
+
+=== modified file 'js/editor-mainPanel-diagramEditor-arrowToolbar-resources.js'
+--- js/editor-mainPanel-diagramEditor-arrowToolbar-resources.js	2013-11-08 11:29:02 +0000
++++ js/editor-mainPanel-diagramEditor-arrowToolbar-resources.js	2013-11-25 08:14:39 +0000
+@@ -18,15 +18,32 @@
+ 		fill : 'black',
+ 		fontStyle : 'normal',
+ 		fontSize : 14,
+-		text : "Key: ",
++		text : "キー: ",
+ 	});
+ 	dialog.add(simpleText);
+ 
++	var correspondentKey = function(key){
++		var value = "";
++		if(key == '←'){
++			value = 'LEFT';
++		} else if(key == '→'){
++			value = 'RIGHT';
++		} else if(key == '↑'){
++			value = 'UP';
++		} else if(key == '↓'){
++			value = 'DOWN';
++		} else {
++			value = key;
++		}
++		return value;
++	};
++	
++	
+ 	dialog.getArrowXML = function() {
+ 		var xml = document.createElement("trans");
+ 		$(xml).attr({
+ 			guard : "key",
+-			key : selectBox.value,
++			key : correspondentKey(selectBox.value),
+ 			from : toolbar.arrow.fromState.getId(),
+ 			to : toolbar.arrow.toState.getId()
+ 		});
+@@ -38,10 +55,10 @@
+ 		left : simpleText.getX() + simpleText.getWidth(),
+ 		top : simpleText.getY() - 9,
+ 		optionList : {
+-			left : "LEFT",
+-			right : "RIGHT",
+-			up : "UP",
+-			down : "DOWN",
++			left : "←",
++			right : "→",
++			up : "↑",
++			down : "↓",
+ 			enter : "ENTER",
+ 			space : "SPACE",
+ 			a : "a",
+@@ -81,7 +98,7 @@
+ 			nine : "9",
+ 			zero : "0",
+ 		},
+-		value : dialog.getAttributeString("key", "key", "LEFT"),
++		value : dialog.getAttributeString("key", "key", "←"),
+ 	});
+ 	selectBox.onchange = function() {
+ 		//console.log(selectBox.value);
+@@ -110,7 +127,7 @@
+ 		fill : 'black',
+ 		fontStyle : 'normal',
+ 		fontSize : 14,
+-		text : "Button",
++		text : "ボタン",
+ 	});
+ 	dialog.add(simpleText);
+ 
+@@ -130,9 +147,9 @@
+ 		left : simpleText.getX() + simpleText.getWidth(),
+ 		top : simpleText.getY() - 9,
+ 		optionList : {
+-			left : "left",
++			left : "左クリック",
+ 		},
+-		value : dialog.getAttributeString("click", "button", "left"),
++		value : dialog.getAttributeString("click", "button", "左クリック"),
+ 	});
+ 	selectBox.onchange = function() {
+ 		//console.log(selectBox.value);
+@@ -162,7 +179,7 @@
+ 		fill : 'black',
+ 		fontStyle : 'normal',
+ 		fontSize : 14,
+-		text : "Object: ",
++		text : "何を衝突: ",
+ 	});
+ 	dialog.add(simpleText);
+ 
+@@ -313,7 +330,7 @@
+ 		fill : 'black',
+ 		fontStyle : 'normal',
+ 		fontSize : 14,
+-		text : "Message:",
++		text : "おしらせを受け取った",
+ 	});
+ 	dialog.add(simpleText);
+ 
+@@ -329,16 +346,16 @@
+ 	};
+ 
+ 	var optionList = {
+-		message1 : "It's now!",
+-		message2 : "Careful!",
+-		message3 : "Wait!",
+-		message4 : "It's starting!",
+-		message5 : "It's here!",
+-		message6 : "It's spring",
+-		message7 : "It's sunny",
+-		message8 : "It's raining",
+-		message9 : "It's snowing",
+-		message10 : "Boss coming!",
++		message1 : "いまだ！",
++		message2 : "気をつけて!",
++		message3 : "まだだよ",
++		message4 : "はじまるよ",
++		message5 : "着いたよ",
++		message6 : "花が咲いたよ",
++		message7 : "晴れてきたよ",
++		message8 : "雨がふってきたよ",
++		message9 : "雪がふってきたよ",
++		message10 : "ボスが来たよ!",
+ 	};
+ 	for (var m in customMessages) {
+ 		optionList[m] = customMessages[m];
+@@ -349,7 +366,7 @@
+ 		left : simpleText.getX() + simpleText.getWidth(),
+ 		top : simpleText.getY() - 9,
+ 		optionList : optionList,
+-		value : dialog.getAttributeString("event", "type", "It's now!"),
++		value : dialog.getAttributeString("event", "type", "いまだ！"),
+ 	});
+ 
+ 	selectBox.onchange = function() {
+@@ -375,7 +392,7 @@
+ 	var simpleText = new Kinetic.Text({
+ 		x : 15,
+ 		y : 20,
+-		text : "Percentage:",
++		text : "確率:",
+ 		fontFamily : 'sans-serif',
+ 		fill : 'black',
+ 		fontStyle : 'normal',
+@@ -417,7 +434,7 @@
+ 	var simpleText = new Kinetic.Text({
+ 		x : 15,
+ 		y : 20,
+-		text : "Repeat:",
++		text : "繰り返す回数:",
+ 		fontFamily : 'sans-serif',
+ 		fill : 'black',
+ 		fontStyle : 'normal',
+
+=== modified file 'js/editor-mainPanel-diagramEditor-arrowToolbar.js'
+--- js/editor-mainPanel-diagramEditor-arrowToolbar.js	2013-11-08 11:29:02 +0000
++++ js/editor-mainPanel-diagramEditor-arrowToolbar.js	2013-11-25 06:18:05 +0000
+@@ -50,7 +50,7 @@
+ 		id : 'buttonArrowKeyboard',
+ 		name : 'button',
+ 		addText : true,
+-		text : 'Key',
++		text : 'キーボード',
+ 		effect3D : true,
+ 		onClick : function() {
+ 			toolbar.toggle(this);
+@@ -73,7 +73,7 @@
+ 		id : 'buttonArrowMouse',
+ 		name : 'button',
+ 		addText : true,
+-		text : 'Mouse',
++		text : 'クリック',
+ 		effect3D : true,
+ 		onClick : function() {
+ 			toolbar.toggle(this);
+@@ -96,7 +96,7 @@
+ 		id : 'buttonArrowExplosion',
+ 		name : 'button',
+ 		addText : true,
+-		text : 'Collide',
++		text : '衝突',
+ 		effect3D : true,
+ 		onClick : function() {
+ 			toolbar.toggle(this);
+@@ -119,7 +119,7 @@
+ 		id : 'buttonActionMessage',
+ 		name : 'button',
+ 		addText : true,
+-		text : 'Message',
++		text : 'おしらせ',
+ 		effect3D : true,
+ 		onClick : function() {
+ 			toolbar.toggle(this);
+@@ -142,7 +142,7 @@
+ 		id : 'buttonArrowPercent',
+ 		name : 'button',
+ 		addText : true,
+-		text : 'Percent',
++		text : '確率',
+ 		effect3D : true,
+ 		onClick : function() {
+ 			toolbar.toggle(this);
+@@ -165,7 +165,7 @@
+ 		id : 'buttonActionChange',
+ 		name : 'button',
+ 		addText : true,
+-		text : 'Repeat',
++		text : '繰り返し',
+ 		effect3D : true,
+ 		onClick : function() {
+ 			toolbar.toggle(this);
+
+=== modified file 'js/input.js'
+--- js/input.js	2013-11-08 11:29:02 +0000
++++ js/input.js	2013-11-25 08:14:39 +0000
+@@ -15,6 +15,10 @@
+ };
+ /** Map the corresponding islay3d key with enchant.js key */
+ var InputHash = function(player) {
++	/*this['↑'] = player.input.up;
++	this['↓'] = player.input.down;
++	this['←'] = player.input.left;
++	this['→'] = player.input.right;*/
+ 	this['UP'] = player.input.up;
+ 	this['DOWN'] = player.input.down;
+ 	this['LEFT'] = player.input.left;
+
+=== modified file 'player.xml' (properties changed: -x to +x)
+--- player.xml	2013-10-25 18:20:55 +0000
++++ player.xml	2013-11-25 08:14:39 +0000
+@@ -1,43 +1,25 @@
+ <islay3d ver="1.1">
+ <objectlist>
+-<data name="Avion" path="model/3dtin/Avion.dae">
+-</data>
+-<data name="flat grass" path="model/3dtin/flat grass.dae">
++<data name="hippo" path="users/Google105162652429509013137/models/hippo.dae">
+ </data>
+ </objectlist>
+ <characterlist>
+-<character name="RALLIE" parts="Avion" rotation="1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000">
+-<statediagram name="Diagram1">
+-<statelist>
+-</statelist>
+-<translist>
+-</translist>
+-</statediagram>
+-</character>
+-<character name="flat grass" parts="flat grass" rotation="1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000">
+-<statediagram name="Diagram1">
+-<statelist>
+-</statelist>
+-<translist>
+-</translist>
+-</statediagram>
+-</character>
+-<character name="bugatti veyron style" parts="flat grass" rotation="1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000">
+-<statediagram name="Diagram1">
+-<statelist>
+-</statelist>
+-<translist>
++<character name="hippo" parts="hippo" rotation="1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000">
++<statediagram name="Diagram1">
++<statelist>
++<state name="State 0" action="move" front="-2" right="2" up="0" pitch="-2" yaw="0" roll="0" pos_x="430" pos_y="227"/>
++<state name="State 1" action="move" front="0" right="0" up="-3" pitch="0" yaw="0" roll="0" pos_x="630" pos_y="224"/>
++</statelist>
++<translist>
++<trans guard="key" key="LEFT" from="State 0" to="State 1"/>
++<trans guard="default" from="State 1" to="State 0"/>
+ </translist>
+ </statediagram>
+ </character>
+ </characterlist>
+ <grouplist>
+ <group name="main">
+-<fork character="RALLIE" x="0.000000" y="0.000000" z="0.000000">
+-</fork>
+-<fork character="flat grass" x="0.000000" y="0.000000" z="0.000000">
+-</fork>
+-<fork character="bugatti veyron style" x="0.000000" y="0.000000" z="0.000000">
++<fork character="hippo" x="0.000000" y="0.000000" z="0.000000">
+ </fork>
+ </group>
+ </grouplist>
+
