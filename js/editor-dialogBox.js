@@ -335,7 +335,6 @@ var DialogBoxWithAddThumbnails = function(config) {
 		fill: '#DDDDDD',
 	});
 	triangleLeft.on('click', function(){
-		console.log(dialogBox.selectPanels.getX() , rectSelect.getX())
 		if (dialogBox.selectPanels.getX() < rectSelect.getX()) {
 			var tweenLeft = new Kinetic.Tween({
 				node : dialogBox.selectPanels,
@@ -346,6 +345,8 @@ var DialogBoxWithAddThumbnails = function(config) {
 			tweenLeft.play();
 		}
 	});
+	dialogBox.add(triangleLeft);
+	
 	var triangleRight = new Kinetic.Polygon({
 		points : [rectSelect.getX() + rectSelect.getWidth(), rectSelect.getY() + 6, 
 				rectSelect.getX() + rectSelect.getWidth(), rectSelect.getY() + 60 - 6, 
@@ -353,9 +354,6 @@ var DialogBoxWithAddThumbnails = function(config) {
 		fill: '#DDDDDD',
 	});
 	triangleRight.on('click', function(){
-		console.log(dialogBox.selectPanels.getMax() , rectSelect.getX() + rectSelect.getWidth());
-		//rectTriangleDn.setShadowOffset(0);
-		//layer3.draw();
 		if (dialogBox.selectPanels.getMax() > rectSelect.getX() + rectSelect.getWidth()) {
 			var tweenRight = new Kinetic.Tween({
 				node : dialogBox.selectPanels,
@@ -366,7 +364,6 @@ var DialogBoxWithAddThumbnails = function(config) {
 			tweenRight.play();
 		}
 	});
-	dialogBox.add(triangleLeft);
 	dialogBox.add(triangleRight);
 
 	var rectSelectInner = new Kinetic.Group({
@@ -470,13 +467,6 @@ var DialogBoxWithAddThumbnails = function(config) {
 			};
 
 			dialogBox.selectPanels.add(panel);
-			//console.log("here", dialogBox.selectPanels.getChildren().length);
-			/*if (dialogBox.panels.getHeight() < rect2.getHeight()) {
-			 dialogBox.scrollBar.hide();
-			 } else {
-			 dialogBox.scrollBar.show();
-			 dialogBox.scrollBar.setHeight(rect2.getHeight() / dialogBox.panels.getHeight() * rect2.getHeight() - 12);
-			 }*/
 
 			dialogBox.getParent().draw();
 		};
@@ -674,26 +664,6 @@ var DialogBoxWithAddThumbnails = function(config) {
 		preview.src = config.path;
 	};
 
-	/*var setThumbnails = function() {
-	 readdir({
-	 path : config.thumbnails.path,
-	 mime : config.thumbnails.mime,
-	 callback : function(thumbnails) {
-	 for (var i = 0; i < thumbnails.length; i++) {
-	 addPanel({
-	 name : thumbnails[i].replace('.png', ""),
-	 mime : '.png',
-	 path : config.thumbnails.path + thumbnails[i],
-	 scale : config.thumbnails.scale,
-	 onClick : config.thumbnails.onClick,
-	 onMouseOver : config.thumbnails.onMouseOver,
-	 onMouseOut : config.thumbnails.onMouseOut,
-	 });
-	 }
-	 }
-	 });
-	 };*/
-
 	var rectInner = new Kinetic.Group({
 		clip : [rect2.getX() + 1, rect2.getY() + 1, rect2.getWidth() - 2, rect2.getHeight() - 2]
 	});
@@ -702,8 +672,6 @@ var DialogBoxWithAddThumbnails = function(config) {
 	rectInner.add(dialogBox.panels);
 	rectInner.add(dialogBox.scrollBar);
 	dialogBox.add(rectInner);
-
-	//setThumbnails();
 
 	return dialogBox;
 };
