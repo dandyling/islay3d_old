@@ -503,6 +503,20 @@ var DialogBoxWithAddThumbnails = function(config) {
 
 	/******************* Code for Group follows **********************/
 	var titleMargin = 40;
+	var groupName = 
+	var simpleText = new Kinetic.Text({
+				x : rectPanel.getX() + panel.width / 2,
+				y : rectPanel.getY() + panel.height + 2,
+				text : config.name.replace(config.mime, ""),
+				fontStyle : 'bold',
+				fontSize : 9,
+				fontFamily : 'sans-serif',
+				fill : 'black',
+				align : 'center',
+				shadowOpacity : 0.5,
+			});
+			simpleText.setOffsetX(Math.round(simpleText.getWidth() / 2));
+			
 
 	var rect2 = new Kinetic.Rect({
 		x : rect.getX() + m2,
