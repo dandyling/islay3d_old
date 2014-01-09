@@ -16,44 +16,44 @@
 		<link rel="stylesheet" href="css/table.css">
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
 		<link rel="stylesheet" href="css/jquery.fileupload.css">
-		<script src="js/jquery-1.9.1.js"></script>
-		<script src="js/jquery-ui-1.10.3.custom.js"></script>
-		<script src="js/jquery.iframe-transport.js"></script>
-		<script src="js/jquery.fileupload.js"></script>
-		<script src="js/plugins/libs/gl-matrix-min.js"></script>
-		<script src="js/hashtable.js"></script>
-		<script src="js/utility.js"></script>
-        <script src="js/enchant.js"></script>
-		<script src="js/plugins/gl.enchant.js"></script>
-		<script src="js/plugins/bone.gl.enchant.js"></script>
-		<script src="js/plugins/primitive.gl.enchant.js"></script>
-		<script src="js/plugins/collada.gl.enchant.js"></script>
-		<script src="js/xml3di.js"></script>
-		<script src="js/hash.js"></script>
-		<script src="js/executeAction.js"></script>
-		<script src="js/character.js"></script>
-		<script src="js/transition.js"></script>
-		<script src="js/previewerPlayer.js"></script>
-		<script src="js/kinetic-v4.6.0.js"></script>
-		<script src="js/editor.js" defer="defer"></script>
-		<script src="js/editor-background.js" defer="defer"></script>
-		<script src="js/editor-menuBar.js" defer="defer"></script>
-		<script src="js/editor-functionBar.js" defer="defer"></script>
-		<script src="js/editor-mainPanel.js" defer="defer"></script>
-		<script src="js/editor-mainPanel-characterPanel.js" defer="defer"></script>
-		<script src="js/editor-dialogBox-resources.js" defer="defer"></script>
-		<script src="js/editor-dialogBox.js" defer="defer"></script>
-		<script src="js/editor-mainPanel-diagramEditor-stateAndArrow.js" defer="defer"></script>
-		<script src="js/editor-mainPanel-diagramLayer.js" defer="defer"></script>
-		<script src="js/editor-mainPanel-tabBar.js" defer="defer"></script>
-		<script src="js/editor-mainPanel-diagramEditor-drawingToolbar.js" defer="defer"></script>
-		<script src="js/editor-dialogSmall.js" defer="defer"></script>
-		<script src="js/editor-mainPanel-diagramEditor-actionToolbar.js" defer="defer"></script>
-		<script src="js/editor-mainPanel-diagramEditor-actionToolbar-resources.js" defer="defer"></script>
-		<script src="js/editor-mainPanel-diagramEditor-arrowToolbar.js" defer="defer"></script>
-		<script src="js/editor-mainPanel-diagramEditor-arrowToolbar-resources.js" defer="defer"></script>
-		<script src="js/editor-avatar.js" defer="defer"></script>
-		<script src="js/editor-login.js" defer="defer"></script>
+		<script src="js/lib/jquery-1.9.1.js"></script>
+		<script src="js/lib/jquery-ui-1.10.3.custom.js"></script>
+		<script src="js/lib/jquery.iframe-transport.js"></script>
+		<script src="js/lib/jquery.fileupload.js"></script>
+        <script src="js/lib/enchant.js"></script>
+		<script src="js/lib/plugins/libs/gl-matrix-min.js"></script>
+		<script src="js/lib/plugins/gl.enchant.js"></script>
+		<script src="js/lib/plugins/bone.gl.enchant.js"></script>
+		<script src="js/lib/plugins/primitive.gl.enchant.js"></script>
+		<script src="js/lib/plugins/collada.gl.enchant.js"></script>
+		<script src="js/lib/kinetic-v4.6.0.js"></script>
+		<script src="js/lib/hashtable.js"></script>
+		<script src="js/player/xml3di.js"></script>
+		<script src="js/player/hash.js"></script>
+		<script src="js/player/executeAction.js"></script>
+		<script src="js/player/character.js"></script>
+		<script src="js/player/transition.js"></script>
+		<script src="js/editor/editor.js" defer="defer"></script>
+		<script src="js/editor/utility.js"></script>
+		<script src="js/editor/previewerPlayer.js"></script>
+		<script src="js/editor/background.js" defer="defer"></script>
+		<script src="js/editor/menuBar.js" defer="defer"></script>
+		<script src="js/editor/functionBar.js" defer="defer"></script>
+		<script src="js/editor/mainPanel.js" defer="defer"></script>
+		<script src="js/editor/mainPanel-characterPanel.js" defer="defer"></script>
+		<script src="js/editor/mainPanel-tabBar.js" defer="defer"></script>
+		<script src="js/editor/dialogBox-resources.js" defer="defer"></script>
+		<script src="js/editor/dialogBox.js" defer="defer"></script>
+		<script src="js/editor/dialogBox-dialogSmall.js" defer="defer"></script>
+		<script src="js/editor/diagramEditor-stateAndArrow.js" defer="defer"></script>
+		<script src="js/editor/diagramEditor-diagramLayer.js" defer="defer"></script>
+		<script src="js/editor/diagramEditor-drawingToolbar.js" defer="defer"></script>
+		<script src="js/editor/diagramEditor-actionToolbar.js" defer="defer"></script>
+		<script src="js/editor/diagramEditor-actionToolbar-resources.js" defer="defer"></script>
+		<script src="js/editor/diagramEditor-arrowToolbar.js" defer="defer"></script>
+		<script src="js/editor/diagramEditor-arrowToolbar-resources.js" defer="defer"></script>
+		<script src="js/editor/avatar.js" defer="defer"></script>
+		<script src="js/editor/login.js" defer="defer"></script>
 		<script src="js/main.js" defer="defer"></script>
 	</head>
 
