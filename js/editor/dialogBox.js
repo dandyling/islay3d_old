@@ -336,18 +336,24 @@ var DialogBoxWithAddThumbnails = function(config) {
 		fill: '#DDDDDD',
 	});
 	triangleLeft.on('click', function(){
-		if (dialogBox.selectPanels.getX() < rectSelect.getX()) {
+		var width = (60 + m2 + m2);
+		var diff = Math.abs(dialogBox.selectPanels.getX() - rectSelect.getX() - m2);
+		var remainder = diff%width;
+		var multiple = Math.floor(diff/width);
+		var displacement = width * ((multiple > 0) ? 1 : 0) + remainder;
+		if (dialogBox.selectPanels.getX() < rectSelect.getX() + m2) {
 			var tweenLeft = new Kinetic.Tween({
 				node : dialogBox.selectPanels,
 				easing : Kinetic.Easings.EaseInOut,
-				x : dialogBox.selectPanels.getX() + (60 + m2 + m2),
+				x : dialogBox.selectPanels.getX() + displacement,
 				duration : 0.2
 			});
 			tweenLeft.play();
 		}
 	});
 	dialogBox.add(triangleLeft);
-	
+
+
 	var triangleRight = new Kinetic.Polygon({
 		points : [rectSelect.getX() + rectSelect.getWidth(), rectSelect.getY() + 6, 
 				rectSelect.getX() + rectSelect.getWidth(), rectSelect.getY() + 60 - 6, 
@@ -355,11 +361,16 @@ var DialogBoxWithAddThumbnails = function(config) {
 		fill: '#DDDDDD',
 	});
 	triangleRight.on('click', function(){
-		if (dialogBox.selectPanels.getMax() > rectSelect.getX() + rectSelect.getWidth()) {
+		var width = (60 + m2 + m2);
+		var diff = Math.abs(dialogBox.selectPanels.getMax() - rectSelect.getX() - rectSelect.getWidth() + m2);
+		var remainder = diff%width;
+		var multiple = Math.floor(diff/width);
+		var displacement = width * ((multiple > 0) ? 1 : 0) + remainder;
+		if (dialogBox.selectPanels.getMax() > rectSelect.getX() + rectSelect.getWidth() - m2) {
 			var tweenRight = new Kinetic.Tween({
 				node : dialogBox.selectPanels,
 				easing : Kinetic.Easings.EaseInOut,
-				x : dialogBox.selectPanels.getX() - (60 + m2 + m2),
+				x : dialogBox.selectPanels.getX() - displacement,
 				duration : 0.2
 			});
 			tweenRight.play();
