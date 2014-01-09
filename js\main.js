@@ -15,7 +15,7 @@ var clearTempFiles = function() {
 clearTempFiles();
 
 setTimeout(function(){
-	stage.get('#buttonMenuHelp')[0].fire('click');
+	//stage.get('#buttonMenuHelp')[0].fire('click');
 }, 1000);
 
 
