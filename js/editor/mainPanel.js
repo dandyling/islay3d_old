@@ -100,11 +100,16 @@ var drawMainPanel = function() {
 		rectTriangleUp.on('mouseup', function() {
 			rectTriangleUp.setShadowOffset(0);
 			layer3.draw();
-			if (stage.get('#groupPanelBar')[0].getY() < 0) {
+			var charPanelHeight = stage.selectedPanel.rect.getHeight();
+			var diff = stage.get('#groupPanelBar')[0].getY();
+			var remainder = Math.abs(diff%charPanelHeight);
+			var multiple = Math.floor(Math.abs(diff/charPanelHeight));
+			var displacement = charPanelHeight * ((multiple > 0) ? 1 : 0) + remainder;
+			if (displacement > 0) {
 				var tweenDn = new Kinetic.Tween({
 					node : stage.get('#groupPanelBar')[0],
 					easing : Kinetic.Easings.EaseInOut,
-					y : stage.get('#groupPanelBar')[0].getY() + (60 + m1 * 2 + mText),
+					y : stage.get('#groupPanelBar')[0].getY() + displacement,
 					duration : 0.2
 				});
 				tweenDn.play();
@@ -138,11 +143,16 @@ var drawMainPanel = function() {
 		rectTriangleDn.on('mouseup', function() {
 			rectTriangleDn.setShadowOffset(0);
 			layer3.draw();
-			if (panelBar.getMax() > rect.getY() + rect.getHeight() - 40) {
+			var charPanelHeight = stage.selectedPanel.rect.getHeight();
+			var diff = panelBar.getMax() - (rect.getY() + rect.getHeight() - 20);
+			var remainder = Math.abs(diff%charPanelHeight);
+			var multiple = Math.floor(Math.abs(diff/charPanelHeight));
+			var displacement = charPanelHeight * ((multiple > 0) ? 1 : 0) + remainder;
+			if (displacement > 0) {
 				var tweenUp = new Kinetic.Tween({
 					node : stage.get('#groupPanelBar')[0],
 					easing : Kinetic.Easings.EaseInOut,
-					y : stage.get('#groupPanelBar')[0].getY() - (60 + m1 * 2 + mText),
+					y : stage.get('#groupPanelBar')[0].getY() - displacement,
 					duration : 0.2
 				});
 				tweenUp.play();
