@@ -155,6 +155,7 @@ var DialogBoxWithThumbnails = function(config) {
 			};
 		}
 	});
+	
 	dialogBox.scrollBar.on('mouseover', function() {
 		document.body.style.cursor = 'pointer';
 	});
@@ -523,6 +524,15 @@ var DialogBoxWithAddThumbnails = function(config) {
 			};
 		}
 	});
+	dialogBox.scrollBar.refresh = function(){
+		if (dialogBox.panels.getHeight() < rect2.getHeight()) {
+			dialogBox.scrollBar.hide();
+		} else {
+			dialogBox.scrollBar.show();
+			dialogBox.scrollBar.setHeight(rect2.getHeight() / dialogBox.panels.getHeight() * rect2.getHeight() - 12);
+		}
+		dialogBox.draw();
+	};
 	dialogBox.scrollBar.on('mouseover', function() {
 		document.body.style.cursor = 'pointer';
 	});
@@ -548,16 +558,16 @@ var DialogBoxWithAddThumbnails = function(config) {
 		var widthMin = 20000;
 		var widthMax = 0;
 		for (var i = 0; i < children.length; i++) {
-			if (children[i].rectFrame.getY() < widthMin) {
-				widthMin = children[i].rectFrame.getY();
+			if (children[i].getY() < widthMin) {
+				widthMin = children[i].getY();
 			}
-			if (children[i].rectFrame.getY() + children[i].rectFrame.getWidth() > widthMax) {
-				widthMax = children[i].rectFrame.getY() + children[i].rectFrame.getWidth();
+			if (children[i].getY() + children[i].rectFrame.getWidth() > widthMax) {
+				widthMax = children[i].getY() + children[i].rectFrame.getWidth();
 			}
 		}
 		return widthMax - widthMin;
 	};
-	dialogBox.panels.arrange = function() {
+	dialogBox.panels.refresh = function() {
 		var m3 = 4;
 		var children = dialogBox.panels.getChildren();
 		for (var i = 0; i < children.length; i++) {
@@ -628,7 +638,8 @@ var DialogBoxWithAddThumbnails = function(config) {
 
 			rectPanel.on('click', function(e) {
 				rectPanel.getParent().destroy();
-				dialogBox.panels.arrange();
+				dialogBox.panels.refresh();
+				dialogBox.scrollBar.refresh();
 			});
 
 			rectPanel.superDestroy = rectPanel.destroy;
@@ -651,12 +662,7 @@ var DialogBoxWithAddThumbnails = function(config) {
 			simpleText.setOffsetX(Math.round(simpleText.getWidth() / 2));
 			panel.add(simpleText);
 			dialogBox.panels.add(panel);
-			if (dialogBox.panels.getHeight() < rect2.getHeight()) {
-				dialogBox.scrollBar.hide();
-			} else {
-				dialogBox.scrollBar.show();
-				dialogBox.scrollBar.setHeight(rect2.getHeight() / dialogBox.panels.getHeight() * rect2.getHeight() - 12);
-			}
+			dialogBox.scrollBar.refresh();
 
 			dialogBox.getParent().draw();
 
@@ -672,7 +678,7 @@ var DialogBoxWithAddThumbnails = function(config) {
 	rectInner.add(dialogBox.panels);
 	rectInner.add(dialogBox.scrollBar);
 	dialogBox.add(rectInner);
-
+	dialogBox.scrollBar.refresh();
 	return dialogBox;
 };
 
