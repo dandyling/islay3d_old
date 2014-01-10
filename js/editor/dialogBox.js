@@ -503,7 +503,7 @@ var DialogBoxWithAddThumbnails = function(config) {
 
 	/******************* Code for Group follows **********************/
 	var titleMargin = 40;
-	var groupName = 
+	/*var groupName = 
 	var simpleText = new Kinetic.Text({
 				x : rectPanel.getX() + panel.width / 2,
 				y : rectPanel.getY() + panel.height + 2,
@@ -515,7 +515,7 @@ var DialogBoxWithAddThumbnails = function(config) {
 				align : 'center',
 				shadowOpacity : 0.5,
 			});
-			simpleText.setOffsetX(Math.round(simpleText.getWidth() / 2));
+			simpleText.setOffsetX(Math.round(simpleText.getWidth() / 2));*/
 			
 
 	var rect2 = new Kinetic.Rect({

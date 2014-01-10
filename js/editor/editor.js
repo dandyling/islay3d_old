@@ -54,7 +54,11 @@ stage.showHitCanvas = function(layer) {
 	};
 };
 
-stage.groups = new Array();
+stage.groups = new Hashtable();
+stage.groups.checkExisting = function(){
+	console.log(this);
+};
+stage.groups.checkExisting();
 
 var addIcon = function(config) {
 	config.iconSize = (config.iconSize == undefined) ? 32 : config.iconSize;
