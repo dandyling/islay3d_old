@@ -55,10 +55,24 @@ stage.showHitCanvas = function(layer) {
 };
 
 stage.groups = new Hashtable();
-stage.groups.checkExisting = function(){
-	console.log(this);
+stage.groups.nameIsExist = function(name){
+	var exist = false;
+	stage.groups.each(function(key, value){
+		if(name == key){
+			exist = true;
+		}
+	});
+	return exist;
 };
-stage.groups.checkExisting();
+stage.groups.getAutoName = function(prefix){
+	var count = 0;
+	var name = prefix;
+	while(stage.groups.nameIsExist(name) == true){
+		count++;
+		name = prefix + "" + count;
+	}
+	return name;	
+};
 
 var addIcon = function(config) {
 	config.iconSize = (config.iconSize == undefined) ? 32 : config.iconSize;

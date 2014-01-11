@@ -155,7 +155,7 @@ var DialogBoxWithThumbnails = function(config) {
 			};
 		}
 	});
-	
+
 	dialogBox.scrollBar.on('mouseover', function() {
 		document.body.style.cursor = 'pointer';
 	});
@@ -333,13 +333,13 @@ var DialogBoxWithAddThumbnails = function(config) {
 
 	var triangleLeft = new Kinetic.Polygon({
 		points : [rectSelect.getX(), rectSelect.getY() + 6, rectSelect.getX(), rectSelect.getY() + 60 - 6, rectSelect.getX() - 15, rectSelect.getY() + 32],
-		fill: '#DDDDDD',
+		fill : '#DDDDDD',
 	});
-	triangleLeft.on('click', function(){
+	triangleLeft.on('click', function() {
 		var width = (60 + m2 + m2);
 		var diff = Math.abs(dialogBox.selectPanels.getX() - rectSelect.getX() - m2);
-		var remainder = diff%width;
-		var multiple = Math.floor(diff/width);
+		var remainder = diff % width;
+		var multiple = Math.floor(diff / width);
 		var displacement = width * ((multiple > 0) ? 1 : 0) + remainder;
 		if (dialogBox.selectPanels.getX() < rectSelect.getX() + m2) {
 			var tweenLeft = new Kinetic.Tween({
@@ -353,18 +353,15 @@ var DialogBoxWithAddThumbnails = function(config) {
 	});
 	dialogBox.add(triangleLeft);
 
-
 	var triangleRight = new Kinetic.Polygon({
-		points : [rectSelect.getX() + rectSelect.getWidth(), rectSelect.getY() + 6, 
-				rectSelect.getX() + rectSelect.getWidth(), rectSelect.getY() + 60 - 6, 
-				rectSelect.getX() + rectSelect.getWidth() + 15, rectSelect.getY() + 32],
-		fill: '#DDDDDD',
+		points : [rectSelect.getX() + rectSelect.getWidth(), rectSelect.getY() + 6, rectSelect.getX() + rectSelect.getWidth(), rectSelect.getY() + 60 - 6, rectSelect.getX() + rectSelect.getWidth() + 15, rectSelect.getY() + 32],
+		fill : '#DDDDDD',
 	});
-	triangleRight.on('click', function(){
+	triangleRight.on('click', function() {
 		var width = (60 + m2 + m2);
 		var diff = Math.abs(dialogBox.selectPanels.getMax() - rectSelect.getX() - rectSelect.getWidth() + m2);
-		var remainder = diff%width;
-		var multiple = Math.floor(diff/width);
+		var remainder = diff % width;
+		var multiple = Math.floor(diff / width);
 		var displacement = width * ((multiple > 0) ? 1 : 0) + remainder;
 		if (dialogBox.selectPanels.getMax() > rectSelect.getX() + rectSelect.getWidth() - m2) {
 			var tweenRight = new Kinetic.Tween({
@@ -386,7 +383,7 @@ var DialogBoxWithAddThumbnails = function(config) {
 		x : rectSelect.getX() + m2,
 		y : rectSelect.getY() + m2
 	});
-	dialogBox.selectPanels.getMax = function(){
+	dialogBox.selectPanels.getMax = function() {
 		var children = dialogBox.selectPanels.getChildren();
 		var lastChild = children[children.length - 1];
 		return dialogBox.selectPanels.getX() + lastChild.getX() + 60;
@@ -400,14 +397,13 @@ var DialogBoxWithAddThumbnails = function(config) {
 		panel.config = configSelect;
 		panel.width = 60;
 		panel.height = 45;
-		
-	
+
 		var preview = new Image();
 		preview.onload = function() {
 			var image = new Kinetic.Image({
 				image : preview
 			});
-			
+
 			var column = dialogBox.selectPanels.getChildren().length;
 			var posX = (panel.width + m3 * 2 + m2) * column;
 			//console.log(column, posX);
@@ -503,20 +499,6 @@ var DialogBoxWithAddThumbnails = function(config) {
 
 	/******************* Code for Group follows **********************/
 	var titleMargin = 40;
-	/*var groupName = 
-	var simpleText = new Kinetic.Text({
-				x : rectPanel.getX() + panel.width / 2,
-				y : rectPanel.getY() + panel.height + 2,
-				text : config.name.replace(config.mime, ""),
-				fontStyle : 'bold',
-				fontSize : 9,
-				fontFamily : 'sans-serif',
-				fill : 'black',
-				align : 'center',
-				shadowOpacity : 0.5,
-			});
-			simpleText.setOffsetX(Math.round(simpleText.getWidth() / 2));*/
-			
 
 	var rect2 = new Kinetic.Rect({
 		x : rect.getX() + m2,
@@ -527,6 +509,20 @@ var DialogBoxWithAddThumbnails = function(config) {
 		fill : '#333333',
 		strokeWidth : 1,
 	});
+
+	var groupName = stage.groups.getAutoName("グループ1");
+	var simpleText = new Kinetic.Text({
+		x : rect2.getX() + rect2.getWidth() / 2,
+		y : rect2.getY() + 8,
+		text : groupName,
+		//fontStyle : 'bold',
+		fontSize : 16,
+		fontFamily : 'sans-serif',
+		fill : 'white',
+		align : 'center',
+		//shadowOpacity : 0.5,
+	});
+	simpleText.setOffsetX(Math.round(simpleText.getWidth() / 2));
 
 	dialogBox.scrollBar = new Kinetic.Rect({
 		x : rect2.getX() + rect2.getWidth() - 16,
@@ -549,12 +545,12 @@ var DialogBoxWithAddThumbnails = function(config) {
 			};
 		}
 	});
-	dialogBox.scrollBar.refresh = function(){
-		if (dialogBox.panels.getHeight() < rect2.getHeight()) {
+	dialogBox.scrollBar.refresh = function() {
+		if (dialogBox.panels.getHeight() < rect2.getHeight() - titleMargin) {
 			dialogBox.scrollBar.hide();
 		} else {
 			dialogBox.scrollBar.show();
-			dialogBox.scrollBar.setHeight(rect2.getHeight() / dialogBox.panels.getHeight() * rect2.getHeight() - 12);
+			dialogBox.scrollBar.setHeight((rect2.getHeight()-titleMargin)  / dialogBox.panels.getHeight() * (rect2.getHeight()-titleMargin) - 12);
 		}
 		dialogBox.draw();
 	};
@@ -565,13 +561,13 @@ var DialogBoxWithAddThumbnails = function(config) {
 		document.body.style.cursor = cursor;
 	});
 	dialogBox.scrollBar.on('dragend', function() {
-		var height = rect2.getHeight() - dialogBox.scrollBar.getHeight() - 12;
-		var currentY = dialogBox.scrollBar.getY() - rect2.getY() - 6;
+		var height = rect2.getHeight() - titleMargin - dialogBox.scrollBar.getHeight() - 12;
+		var currentY = dialogBox.scrollBar.getY() - (rect2.getY() + titleMargin) - 6;
 		var ratio = currentY / height;
 		dialogBox.panels.tween = new Kinetic.Tween({
 			node : dialogBox.panels,
 			easing : Kinetic.Easings.EaseInOut,
-			offsetY : ratio * (dialogBox.panels.getHeight() - rect2.getHeight()),
+			offsetY : ratio * (dialogBox.panels.getHeight() - (rect2.getHeight() - titleMargin)),
 			duration : 0.5
 		});
 		dialogBox.panels.tween.play();
@@ -700,6 +696,7 @@ var DialogBoxWithAddThumbnails = function(config) {
 	});
 
 	dialogBox.add(rect2);
+	dialogBox.add(simpleText);
 	rectInner.add(dialogBox.panels);
 	rectInner.add(dialogBox.scrollBar);
 	dialogBox.add(rectInner);
