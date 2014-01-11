@@ -573,7 +573,10 @@ var DialogBoxWithAddThumbnails = function(config) {
 		dialogBox.panels.tween.play();
 	});
 
-	dialogBox.panels = new Kinetic.Group();
+	dialogBox.panels = new Kinetic.Group({
+		x : rect2.getX(),
+		y : rect2.getY() + titleMargin
+	});
 	dialogBox.panels.getHeight = function() {
 		var children = dialogBox.panels.getChildren();
 		var widthMin = 20000;
@@ -595,8 +598,8 @@ var DialogBoxWithAddThumbnails = function(config) {
 			var panel = children[i];
 			var column = i % 5;
 			var row = Math.floor(i / 5);
-			var posX = rect2.getX() + m2 + (panel.width + m3 * 2 + m2) * column;
-			var posY = rect2.getY() + m2 + (panel.width + m3 * 3) * row;
+			var posX = m2 + (panel.width + m3 * 2 + m2) * column;
+			var posY = m2 + (panel.width + m3 * 3) * row;
 
 			panel.setX(posX);
 			panel.setY(posY);
@@ -614,8 +617,8 @@ var DialogBoxWithAddThumbnails = function(config) {
 		panel.height = 75;
 		var column = dialogBox.panels.getChildren().length % 5;
 		var row = Math.floor(dialogBox.panels.getChildren().length / 5);
-		panel.setX(rect2.getX() + m2 + (panel.width + m3 * 2 + m2) * column);
-		panel.setY(rect2.getY() + m2 + (panel.width + m3 * 3) * row + titleMargin);
+		panel.setX(m2 + (panel.width + m3 * 2 + m2) * column);
+		panel.setY(m2 + (panel.width + m3 * 3) * row + titleMargin);
 
 		panel.on('click', config.onClick);
 
@@ -684,9 +687,7 @@ var DialogBoxWithAddThumbnails = function(config) {
 			panel.add(simpleText);
 			dialogBox.panels.add(panel);
 			dialogBox.scrollBar.refresh();
-
-			dialogBox.getParent().draw();
-
+			dialogBox.panels.refresh();
 		};
 		preview.src = config.path;
 	};
