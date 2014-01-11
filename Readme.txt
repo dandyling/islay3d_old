@@ -1,5 +1,3 @@
 Islay3D - Create 3D games with just circles and arrows!
 
-Ling, Dandy 23456789
-
-Yes
+Ling, Dandy
