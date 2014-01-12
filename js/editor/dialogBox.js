@@ -543,8 +543,8 @@ var DialogBoxWithAddThumbnails = function(config) {
 	textField.style.position = "absolute";
 	textField.style.top = "10px";
 	textField.style.left = (rect2.getWidth()/2 - 50) + "px";
-	
-	
+	dialogBox.textField = textField;
+	//
 	/*var imgEdit = stage.images['imgWhiteEdit'].clone();
 	imgEdit.setAttrs({
 		x : simpleText.getX() + simpleText.getWidth()/2 + 10,
@@ -639,7 +639,6 @@ var DialogBoxWithAddThumbnails = function(config) {
 		var mText = 8;
 		var panel = new Kinetic.Group();
 		panel.config = config;
-
 		panel.width = 100;
 		panel.height = 75;
 		var column = dialogBox.panels.getChildren().length % 5;

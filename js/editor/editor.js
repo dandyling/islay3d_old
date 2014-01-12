@@ -55,7 +55,7 @@ stage.showHitCanvas = function(layer) {
 };
 
 stage.groups = new Hashtable();
-stage.groups.nameIsExist = function(name){
+stage.groups.isExistName = function(name){
 	var exist = false;
 	stage.groups.each(function(key, value){
 		if(name == key){
@@ -67,7 +67,7 @@ stage.groups.nameIsExist = function(name){
 stage.groups.getAutoName = function(prefix){
 	var count = 0;
 	var name = prefix;
-	while(stage.groups.nameIsExist(name) == true){
+	while(stage.groups.isExistName(name) == true){
 		count++;
 		name = prefix + "" + count;
 	}

@@ -1,13 +1,13 @@
 var dialogBoxes = new Array();
 dialogBoxes.closeSmallDialogs = function() {
 	if (dialogBoxes.actionToolbar != undefined) {
-		if(dialogBoxes.actionToolbar.dialog != undefined) {
+		if (dialogBoxes.actionToolbar.dialog != undefined) {
 			dialogBoxes.actionToolbar.dialog.close();
 			delete dialogBoxes.actionToolbar.dialog;
 		}
 	}
 	if (dialogBoxes.arrowToolbar != undefined) {
-		if(dialogBoxes.arrowToolbar.dialog != undefined) {
+		if (dialogBoxes.arrowToolbar.dialog != undefined) {
 			dialogBoxes.arrowToolbar.dialog.close();
 			delete dialogBoxes.arrowToolbar.dialog;
 		}
@@ -165,8 +165,8 @@ dialogBoxResources['character-create'] = {
 		mime : '.png',
 		scale : 0.5,
 		onMouseOver : function(e) {
-		    document.body.style.cursor = 'pointer';
-		    
+			document.body.style.cursor = 'pointer';
+
 			var layer = stage.get('#character-create')[0].getParent();
 			var tooltip = new Kinetic.Label({
 				x : this.getAbsolutePosition().x - 4,
@@ -200,8 +200,8 @@ dialogBoxResources['character-create'] = {
 
 		},
 		onMouseOut : function(e) {
-		    document.body.style.cursor = cursor;
-		    
+			document.body.style.cursor = cursor;
+
 			var layer = stage.get('#character-create')[0].getParent();
 			while (layer.tooltips.length != 0) {
 				var tooltip = layer.tooltips.pop();
@@ -245,25 +245,27 @@ dialogBoxResources['group-create'] = {
 		text : 'つくる',
 		isMain : true,
 		onClick : function() {
-			var panels = this.getParent().panels.getChildren();
-			var group = document.createElement("group");
-			$(group).attr({
-				name : "somethign"
-			});
-			
-			
-			var objectlist = document.createElement("objectlist");
-			for (var name in stage.objectlist) {
-				var data = document.createElement("data");
-				$(data).attr({
-					name : name,
-					path : stage.objectlist[name]
-				});
-				objectlist.appendChild(data);
+			var groupName = this.getParent().textField.value;
+			if (stage.groups.isExistName(groupName)) {
+				alert(groupName + "が存在します。新名を入力してください。");
+				return;
 			}
-			return objectlist;
 			
-			
+			var groupXML = document.createElement("group");
+			$(groupXML).attr({
+				name : this.getParent().textField.value
+			});
+			var panels = this.getParent().panels.getChildren();
+			for(var i=0; i<panels.length; i++){
+				var forkXML = document.createElement("fork");
+				//console.log(panels[i]);
+				var characterName = panels[i].config.name;
+				$(forkXML).attr({
+					character : characterName
+				});
+				$(groupXML).append(forkXML);
+			}
+			console.log(groupXML);
 		}
 	}, {
 		x : Math.round(window.innerWidth / 2 - 630 / 2) + 15,
@@ -284,7 +286,7 @@ dialogBoxResources['group-create'] = {
 		path : 'users/Google105162652429509013137/models/',
 		mime : '.png',
 		scale : 0.5,
-		
+
 	},
 	callback : function() {
 		var layer = stage.get('#group-create')[0].getParent();
@@ -490,7 +492,7 @@ dialogBoxResources['save-file'] = {
 		onClick : function() {
 			var xml = convertToXML(stage.getXML());
 			var filename = $('#textfield-filename').val();
-			if(filename == "") {
+			if (filename == "") {
 				filename = "untitled";
 			}
 			$.ajax({
@@ -501,11 +503,11 @@ dialogBoxResources['save-file'] = {
 					dest : "../users/" + stage.pid + "/files/",
 					name : filename + ".3di"
 				},
-				success : function(result) {	
+				success : function(result) {
 					console.log(filename + ".3di" + ' saved');
 				}
 			});
-			if(localStorage.playerScreenshot != undefined) {
+			if (localStorage.playerScreenshot != undefined) {
 				$.ajax({
 					type : "POST",
 					url : "php/screenshot.php",
@@ -572,11 +574,11 @@ dialogBoxResources['open-file'] = {
 				p.rectFrame.setFill('white');
 			});
 			this.rectFrame.setFill('#00FFFF');
-									
-			localStorage.openingFile = this.config.path.replace(".png", ".3di");	
+
+			localStorage.openingFile = this.config.path.replace(".png", ".3di");
 			$(window).unbind('beforeunload');
 			location.reload();
 		},
-	}, 
-	
-};
+	},
+
+}; 
