@@ -10,7 +10,7 @@ var Player = function() {
 	player.sceneCharacters = {};
 
 	var scene3d = new Scene3D();
-	scene3d.backgroundColor = [195 / 256, 55 / 256, 69 / 256, 0];
+	scene3d.backgroundColor = [0, 0, 0, 0];
 	player.scene3d = scene3d;
 
 	var light = new DirectionalLight();
@@ -208,8 +208,8 @@ var Player = function() {
 
 	var enchantstage = document.getElementById('enchant-stage');
 	enchantstage.style.right = '38px';
-	enchantstage.style.top = '120px';
-	//enchantstage.style.border = "5px solid red";
+	enchantstage.style.top = '125px';
+	enchantstage.style.border = "2px solid black";
 
 	return player;
 };

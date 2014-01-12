@@ -12,22 +12,21 @@
 		</style>
 		<link rel="stylesheet" href="css/ui-lightness/jquery-ui-1.10.3.custom.css">
 		<link rel="stylesheet" href="css/table.css">
-		<script src="js/jquery-1.9.1.js"></script>
-		<script src="js/jquery-ui-1.10.3.custom.js"></script>
-		<script src="js/plugins/libs/gl-matrix-min.js"></script>
-		<script src="js/utility.js"></script>
-        <script src="js/enchant.js"></script>
-		<script src="js/plugins/gl.enchant.js"></script>
-		<script src="js/plugins/bone.gl.enchant.js"></script>
-		<script src="js/plugins/primitive.gl.enchant.js"></script>
-		<script src="js/plugins/collada.gl.enchant.js"></script>
-		<script src="js/xml3di.js"></script>
-		<script src="js/hash.js"></script>
-		<script src="js/input.js"></script>
-		<script src="js/executeAction.js"></script>
-		<script src="js/character.js"></script>
-		<script src="js/transition.js"></script>
-		<script src="js/player.js" defer="defer"></script>
+		<script src="js/lib/jquery-1.9.1.js"></script>
+		<script src="js/lib/jquery-ui-1.10.3.custom.js"></script>
+		<script src="js/lib/plugins/libs/gl-matrix-min.js"></script>
+        <script src="js/lib/enchant.js"></script>
+		<script src="js/lib/plugins/gl.enchant.js"></script>
+		<script src="js/lib/plugins/bone.gl.enchant.js"></script>
+		<script src="js/lib/plugins/primitive.gl.enchant.js"></script>
+		<script src="js/lib/plugins/collada.gl.enchant.js"></script>
+		<script src="js/player/xml3di.js"></script>
+		<script src="js/player/hash.js"></script>
+		<script src="js/player/input.js"></script>
+		<script src="js/player/executeAction.js"></script>
+		<script src="js/player/character.js"></script>
+		<script src="js/player/transition.js"></script>
+		<script src="js/player/player.js" defer="defer"></script>
 		
 	</head>
 		

@@ -383,7 +383,7 @@ $(document).on('previewerScreenshot', function(event, path) {
 		var imgName = stage.modelName + ".png";
 		$.ajax({
 			type : "POST",
-			url : "php/screenshot_previewer.php",
+			url : "php/screenshot.php",
 			data : {
 				data : imgData,
 				dest : imgDest,
