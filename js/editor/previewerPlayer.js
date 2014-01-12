@@ -10,7 +10,7 @@ var Player = function() {
 	player.sceneCharacters = {};
 
 	var scene3d = new Scene3D();
-	scene3d.backgroundColor = [195 / 256, 55 / 256, 69 / 256, 1.0];
+	scene3d.backgroundColor = [195 / 256, 55 / 256, 69 / 256, 0];
 	player.scene3d = scene3d;
 
 	var light = new DirectionalLight();
