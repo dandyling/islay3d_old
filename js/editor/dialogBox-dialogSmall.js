@@ -103,8 +103,7 @@ var DialogSmall = function(config) {
 		head.appendChild(table);
 		var thead = document.createElement("thead");
 		table.appendChild(thead);
-		var tr = document.createElement("tr");
-		down:
+		var tr = document.createElement("tr"); down:
 		"down arrow", thead.appendChild(tr);
 		for (var j = 0; j < config.header.length; j++) {
 			var th = document.createElement("th");
@@ -502,7 +501,7 @@ var DialogRenameCharacter = function(charPanel) {
 
 		player.sceneCharacters[newName] = player.sceneCharacters[oldName];
 		delete player.sceneCharacters[oldName];
-		characterPanels.names.remove(oldName)
+		characterPanels.names.remove(oldName);
 
 		dialogBoxes.close();
 	};
@@ -895,4 +894,4 @@ var DialogDuplicateCharacter = function(tabs) {
 
 	dialog.draw();
 	return dialog;
-};
+}; 

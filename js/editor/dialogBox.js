@@ -511,19 +511,46 @@ var DialogBoxWithAddThumbnails = function(config) {
 	});
 
 	var groupName = stage.groups.getAutoName("グループ1");
+	
 	var simpleText = new Kinetic.Text({
-		x : rect2.getX() + rect2.getWidth() / 2,
-		y : rect2.getY() + 8,
-		text : groupName,
-		//fontStyle : 'bold',
+		x : rect2.getX() + rect2.getWidth() / 2 - 50 - 10,
+		y : rect2.getY() + 16,
+		text : "グループ名",
 		fontSize : 16,
 		fontFamily : 'sans-serif',
 		fill : 'white',
-		align : 'center',
-		//shadowOpacity : 0.5,
+		align : 'right',
 	});
-	simpleText.setOffsetX(Math.round(simpleText.getWidth() / 2));
-
+	simpleText.setOffsetX(Math.round(simpleText.getWidth()));
+	
+	var inputDivParent = document.createElement("div");
+	document.body.appendChild(inputDivParent);
+	$(inputDivParent).css({
+		width : rect2.getWidth(),
+		height : titleMargin,
+		//background: "green"
+	});
+	$(inputDivParent).offset({
+		left : rect2.getX(),
+		top : rect2.getY(),
+	});
+	dialogBox.inputDivParent = inputDivParent;
+	
+	var textField = document.createElement("input");
+	inputDivParent.appendChild(textField);
+	textField.value = groupName;
+	//textField.setAttribute("placeholder", groupName);
+	textField.style.position = "absolute";
+	textField.style.top = "10px";
+	textField.style.left = (rect2.getWidth()/2 - 50) + "px";
+	
+	
+	/*var imgEdit = stage.images['imgWhiteEdit'].clone();
+	imgEdit.setAttrs({
+		x : simpleText.getX() + simpleText.getWidth()/2 + 10,
+		y : simpleText.getY() - 2,
+	});*/
+	
 	dialogBox.scrollBar = new Kinetic.Rect({
 		x : rect2.getX() + rect2.getWidth() - 16,
 		y : rect2.getY() + 6 + titleMargin,
@@ -695,6 +722,12 @@ var DialogBoxWithAddThumbnails = function(config) {
 	var rectInner = new Kinetic.Group({
 		clip : [rect2.getX() + 1, rect2.getY() + 1 + titleMargin, rect2.getWidth() - 2, rect2.getHeight() - titleMargin - 2]
 	});
+
+	dialogBox.superDestroy = dialogBox.destroy;
+	dialogBox.destroy = function(){
+		document.body.removeChild(dialogBox.inputDivParent);
+		dialogBox.superDestroy();
+	};
 
 	dialogBox.add(rect2);
 	dialogBox.add(simpleText);
