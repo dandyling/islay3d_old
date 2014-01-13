@@ -1,0 +1,12 @@
+.head{width:316px}
+.body{width:330px;height:70px} /*<-- play width this width*/
+.body{*width:383px;_width:400px} /*ie7 fix: width -= 17px*/
+table{border-collapse:collapse;table-layout:fixed;width:100%;_width:auto}
+
+.body{overflow:scroll;overflow-x:hidden;*padding-right:17px;_padding-right:0} /*ie7 fix:padding to 17px*/
+.fix{width:16px;*width:17px;_width:16px}
+@media screen and (-webkit-min-device-pixel-ratio:0){.fix{width:17px}}
+
+th,td{width:4.7em}
+
+.grow{width:auto}
