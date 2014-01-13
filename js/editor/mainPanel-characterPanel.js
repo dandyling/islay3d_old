@@ -338,8 +338,6 @@ var addGroupPanel = function(config) {
 	groupPanel.add(rectPanel);
 	groupPanel.rectPanel = rectPanel;
 	
-	
-	
 	var groupXML = document.createElement("group");
 	$(groupXML).attr({
 		name : config.name
@@ -359,7 +357,8 @@ var addGroupPanel = function(config) {
 		var forkXML = document.createElement("fork");
 		var characterName = config.characters[i].name;
 		$(forkXML).attr({
-			character : characterName
+			character : characterName,
+			img : config.characters[i].img.src
 		});
 		$(groupPanel.groupXML).append(forkXML);
 	}
@@ -385,10 +384,75 @@ var addGroupPanel = function(config) {
 	rectInvi.on('click', function() {
 		toggleCharactersPanel(this.getParent());
 		dialogBoxes.close();
-		var dialogBox1 = new DialogBoxWithAddThumbnails(dialogBoxResources['group-create']);
+		var copiedResource = {};
+		$.extend(copiedResource, dialogBoxResources['group-create']);
+		copiedResource.title = 'グループ編集';
+		copiedResource.buttons[0].text = "ほぞん";
+		copiedResource.buttons[0].onClick = function(){
+			var characterImages = rectInvi.getParent().get('Image');
+			for(var i=0; i<characterImages.length; i++){
+				characterImages[i].remove();
+			}
+			
+			var groupName = this.getParent().textField.value;
+			if (stage.groups.isExistName(groupName)) {
+				alert(groupName + "が存在します。新名を入力してください。");
+				return;
+			}
+			
+			var groupCharacters = new Array();
+			var panels = this.getParent().panels.getChildren();
+			for(var i=0; i<panels.length; i++){
+				groupCharacters.push({
+					name : panels[i].config.name,
+					img : panels[i].getChildren()[1].getFillPatternImage()
+				});
+			}
+			
+			var groupXML = document.createElement("group");
+			$(groupXML).attr({
+				name : groupName
+			});
+			groupPanel.groupXML = groupXML;
+			
+			for(var i=0; i<groupCharacters.length; i++){
+				var characterImage = new Kinetic.Image({
+					x : m1 + m3 + (80- m3 * 2 - 200*0.2)/(groupCharacters.length  -1)*(i),
+					y : m1 + 150 * 0.2 / 2,
+					image : groupCharacters[i].img,
+					scale : 0.2,
+				});
+				groupPanel.add(characterImage);
+				
+				/** append xml */
+				var forkXML = document.createElement("fork");
+				var characterName = groupCharacters[i].name;
+				$(forkXML).attr({
+					character : characterName,
+					img : groupCharacters[i].img.src
+				});
+				$(groupPanel.groupXML).append(forkXML);
+			}
+			rectInvi.moveToTop();
+			groupPanel.draw();	
+			dialogBoxes.close();
+		};
+		copiedResource.callback = function() {
+			var layer = stage.get('#group-create')[0].getParent();
+			layer.tooltips = new Array();
+		};
+		var dialogBox1 = new DialogBoxWithAddThumbnails(copiedResource);
+		
+		for(var i=0; i<groupPanel.groupXML.children.length; i++){
+			var fork = groupPanel.groupXML.children[i];
+			dialogBox1.addPanel({
+				name : fork.attributes["character"].value,
+				path : fork.attributes["img"].value,
+				scale : 0.5,
+			});
+		}
 		dialogBoxes.push(dialogBox1);
 	});
-	stage.showHitCanvas(groupPanel.getParent().getParent().getParent());
 
 	var addGroupPanelBar = function() {
 		var toolbar = new Kinetic.Group();

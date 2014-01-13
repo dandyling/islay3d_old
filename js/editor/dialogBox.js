@@ -719,7 +719,7 @@ var DialogBoxWithAddThumbnails = function(config) {
 		};
 		preview.src = config.path;
 	};
-
+	dialogBox.addPanel = addPanel;
 	var rectInner = new Kinetic.Group({
 		clip : [rect2.getX() + 1, rect2.getY() + 1 + titleMargin, rect2.getWidth() - 2, rect2.getHeight() - titleMargin - 2]
 	});
