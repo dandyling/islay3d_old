@@ -251,21 +251,21 @@ dialogBoxResources['group-create'] = {
 				return;
 			}
 			
-			var groupXML = document.createElement("group");
-			$(groupXML).attr({
-				name : this.getParent().textField.value
-			});
+			var groupCharacters = new Array();
 			var panels = this.getParent().panels.getChildren();
 			for(var i=0; i<panels.length; i++){
-				var forkXML = document.createElement("fork");
-				//console.log(panels[i]);
-				var characterName = panels[i].config.name;
-				$(forkXML).attr({
-					character : characterName
+				groupCharacters.push({
+					name : panels[i].config.name,
+					img : panels[i].getChildren()[1].getFillPatternImage()
 				});
-				$(groupXML).append(forkXML);
 			}
-			console.log(groupXML);
+			
+			addGroupPanel({
+				id : groupName,
+				characters : groupCharacters
+			});
+					
+			dialogBoxes.close();
 		}
 	}, {
 		x : Math.round(window.innerWidth / 2 - 630 / 2) + 15,
@@ -286,7 +286,6 @@ dialogBoxResources['group-create'] = {
 		path : 'users/Google105162652429509013137/models/',
 		mime : '.png',
 		scale : 0.5,
-
 	},
 	callback : function() {
 		var layer = stage.get('#group-create')[0].getParent();

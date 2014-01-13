@@ -26,7 +26,9 @@ var toggleCharactersPanel = function(charPanel) {
 			var tabs = $(stage.selectedPanel.tabDiv).tabs();
 			var index = tabs.tabs("option", "active", 0);
 			tabs.tabs("refresh");
-			player.showCharacter(charPanel);
+			if(charPanel.groupXML == undefined) {
+				player.showCharacter(charPanel);
+			}
 		} else {
 			characterPanels[i].buttonDown = false;
 			characterPanels[i].rect.setFill('white');
@@ -278,6 +280,250 @@ var addCharacterPanel = function(config) {
 	};
 
 	return charPanel;
+};
+
+var addGroupPanel = function(config) {
+	var m = 15;
+	var m1 = 8;
+	var mText = 8;
+	var m3 = 5;
+	
+	var panelBar = stage.get('#groupPanelBar')[0];
+	var rectFunctionBar = stage.get('#rectFunctionBar')[0];
+	var rectMainPanel = stage.get('#rectMainPanel')[0];
+
+	var posX = rectFunctionBar.getX() + rectFunctionBar.getWidth() + m;
+	var posY = rectFunctionBar.getY() + 20 + (60 + m1 * 2 + mText) * characterPanels.length;
+	var groupPanel = new Kinetic.Group({
+		id: config.id,
+		x : posX,
+		y : posY,
+	});
+	
+	groupPanel.diagrams = {};
+	groupPanel.array = new Array();
+	if(config.noTab == undefined) {
+		var diagramId = "tabs-1";
+		groupPanel.diagrams[diagramId] = new DiagramLayer(diagramId);
+		groupPanel.diagrams[diagramId].get('#rectDiagramEditor')[0].off('mousedown');
+		groupPanel.diagrams[diagramId].label = "図1";
+		groupPanel.array.push(groupPanel.diagrams[diagramId]);
+		groupPanel.selectedDiagram = groupPanel.diagrams[diagramId];
+	}
+	groupPanel.count = characterPanels.count++;
+	groupPanel.tabDiv = drawTabBar(groupPanel.count, config.noTab);
+	groupPanel.diagLabels = new Hashtable();
+	
+	var rect = new Kinetic.Rect({
+		width : 80 + m1 + 20,
+		height : 60 + m1 * 2 + mText,
+		stroke : 'black',
+		fill : 'white',
+		strokeWidth : 1,
+	});
+	groupPanel.rect = rect;
+	groupPanel.add(rect);
+	panelBar.add(groupPanel);
+
+	var rectPanel = new Kinetic.Rect({
+		id : 'rectPanel',
+		x: m1,
+		y : m1,
+		width : 80,
+		height : 60,
+		fill : '#C33745',
+		stroke : 'black',
+		strokeWidth : 1
+	});
+	groupPanel.add(rectPanel);
+	groupPanel.rectPanel = rectPanel;
+	
+	
+	
+	var groupXML = document.createElement("group");
+	$(groupXML).attr({
+		name : config.name
+	});
+	groupPanel.groupXML = groupXML;
+	
+	for(var i=0; i<config.characters.length; i++){
+		var characterImage = new Kinetic.Image({
+			x : m1 + m3 + (80- m3 * 2 - 200*0.2)/(config.characters.length  -1)*(i),
+			y : m1 + 150 * 0.2 / 2,
+			image : config.characters[i].img,
+			scale : 0.2,
+		});
+		groupPanel.add(characterImage);
+		
+		/** append xml */
+		var forkXML = document.createElement("fork");
+		var characterName = config.characters[i].name;
+		$(forkXML).attr({
+			character : characterName
+		});
+		$(groupPanel.groupXML).append(forkXML);
+	}
+	
+	var rectInvi = new Kinetic.Rect({
+		x : m1,
+		y : m1,
+		width : 80,
+		height : 60,
+		stroke : 'black',
+		fill : 'white',
+		strokeWidth : 1,
+		opacity : 0
+	});
+	groupPanel.add(rectInvi);
+	rectInvi.on('mouseover', function() {
+		document.body.style.cursor = 'pointer';
+	});
+	rectInvi.on('mouseout', function() {
+		document.body.style.cursor = cursor;
+	});
+	// Toggle on click
+	rectInvi.on('click', function() {
+		toggleCharactersPanel(this.getParent());
+		dialogBoxes.close();
+		var dialogBox1 = new DialogBoxWithAddThumbnails(dialogBoxResources['group-create']);
+		dialogBoxes.push(dialogBox1);
+	});
+	stage.showHitCanvas(groupPanel.getParent().getParent().getParent());
+
+	var addGroupPanelBar = function() {
+		var toolbar = new Kinetic.Group();
+		toolbar.count = 0;
+		toolbar.onLoad = function() {
+			toolbar.count++;
+			if (toolbar.count >= 3) {
+				toolbar.getParent().getParent().getParent().getParent().draw();
+			}
+		};
+		/*addIcon({
+			x : m1 + 80,
+			y : m1 + 20 * 0,
+			source : 'img/mainPanel/edit1.png',
+			layer : toolbar,
+			id : 'characterRenameButton',
+			iconSize : 20,
+			onClick : function() {
+				var dialog = new DialogRenameCharacter(charPanel);
+			},
+			onLoad : toolbar.onLoad
+		});*/
+		/** to do */
+		addIcon({
+			x : m1 + 80,
+			y : m1 + 20 * 0,
+			source : 'img/mainPanel/copy1.png',
+			layer : toolbar,
+			id : 'characterDuplicateButton',
+			iconSize : 20,
+			onClick : function() {
+				/*var index = charPanel.getIndex();
+				var charName = (charPanel.oriName == undefined) ? charPanel.getId() : charPanel.oriName;
+				addCharacterPanel({
+					name : charName,
+					pathImage : charPanel.path,
+					pathModel : charPanel.modelPath
+				});
+				var newCharPanel = characterPanels.pop();
+				characterPanels.splice(index + 1, 0, newCharPanel);
+				stage.get("#groupPanelBar")[0].refresh();*/
+				
+				/*var index = charPanel.getIndex();
+				var characterXML = charPanel.getXML();
+				console.log(characterXML);
+				var data = new Hash(stage.getObjectXML().getElementsByTagName("data"), "name");
+				var charName = (charPanel.oriName == undefined) ? charPanel.getId() : charPanel.oriName;
+				characterXML.attributes["name"].value = charName;
+				loadCharacter(characterXML, data);
+				
+				var newCharPanel = characterPanels.pop();
+				characterPanels.splice(index + 1, 0, newCharPanel);
+				stage.get("#groupPanelBar")[0].refresh();*/
+			},
+			onLoad : toolbar.onLoad
+		});
+		addIcon({
+			x : m1 + 80,
+			y : m1 + 20 * 2,
+			source : 'img/mainPanel/delete1.png',
+			layer : toolbar,
+			id : 'characterDeleteButton',
+			iconSize : 20,
+			onClick : function() {
+				if (confirm('本当に\"' + stage.selectedPanel.getId() + "\"を削除する？")) {
+					stage.selectedPanel.removeSelf();
+					stage.get("#groupPanelBar")[0].refresh();
+					toggleCharactersPanel(characterPanels[0]);
+				}
+			},
+			onLoad : toolbar.onLoad
+		});
+		groupPanel.add(toolbar);
+		groupPanel.toolbar = toolbar;
+	};
+	addGroupPanelBar();
+
+	characterPanels.add(groupPanel);
+
+	var simpleText = new Kinetic.Text({
+		x : m1,
+		y : 60 + m1,
+		width : 80,
+		text : groupPanel.getId(),
+		fontSize : 9,
+		fontFamily : 'sans-serif',
+		fill : 'black',
+		align : 'center',
+		shadowOpacity : 0.5,
+		shadowOffset : 1,
+	});
+	groupPanel.add(simpleText);
+	groupPanel.simpleText = simpleText;
+
+	// This line erases the right border of rect
+	var line = new Kinetic.Line({
+		points : [rect.getWidth(), rect.getY(), rect.getWidth(), rect.getHeight()],
+		stroke : 'black',
+	});
+	groupPanel.add(line);
+	groupPanel.line = line;
+
+	groupPanel.getIndex = function() {
+		for (var i = 0; i < characterPanels.length; i++) {
+			if (characterPanels[i].getId() == groupPanel.getId()) {
+				return i;
+			}
+		}
+	};
+
+	groupPanel.removeSelf = function() {
+		delete player.sceneCharacters[groupPanel.getId()];
+		
+		for (var i = 0; i < characterPanels.length; i++) {
+			if (characterPanels[i].getId() == groupPanel.getId()) {
+				characterPanels.splice(i, 1);
+				for (var a in groupPanel.diagrams) {
+					groupPanel.diagrams[a].clear();
+					groupPanel.diagrams[a].destroy();
+				}
+				stage.groups.remove(groupPanel.getId());
+				groupPanel.destroy();
+
+				document.body.removeChild(groupPanel.tabDiv);
+				break;
+			}
+		}
+	};
+
+	groupPanel.getXML = function() {
+		return groupPanel.groupXML;
+	};
+	toggleCharactersPanel(groupPanel);
+
+	return groupPanel;
 };
 
 stage.objectlist = {};

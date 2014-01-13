@@ -483,11 +483,13 @@ var DialogBoxWithAddThumbnails = function(config) {
 
 	var setSelectThumbnails = function() {
 		for (var i = 0; i < characterPanels.length; i++) {
-			addSelectPanel({
-				name : characterPanels[i].getId(),
-				path : characterPanels[i].path,
-				scale : config.thumbnailsSelect.scale,
-			});
+			if(characterPanels[i].groupXML == undefined){
+				addSelectPanel({
+					name : characterPanels[i].getId(),
+					path : characterPanels[i].path,
+					scale : config.thumbnailsSelect.scale,
+				});
+			};
 		}
 	};
 
