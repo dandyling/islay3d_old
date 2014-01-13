@@ -261,7 +261,7 @@ dialogBoxResources['group-create'] = {
 			}
 			
 			addGroupPanel({
-				id : groupName,
+				name : groupName,
 				characters : groupCharacters
 			});
 					

@@ -3,13 +3,13 @@ var toggleCharactersPanel = function(charPanel) {
 	rectSelected.setOpacity(1);
 	rectSelected.setStroke('gray');
 	rectSelected.draw();
-	
+
 	if (stage.drawingToolbar == undefined) {
 		stage.drawingToolbar = drawDrawingToolbar();
 	} else {
 		stage.drawingToolbar.getParent().moveToTop();
 	}
-	
+
 	for (var i = 0; i < characterPanels.length; i++) {
 		if (characterPanels[i].getId() == charPanel.getId()) {
 			charPanel.buttonDown = true;
@@ -26,7 +26,7 @@ var toggleCharactersPanel = function(charPanel) {
 			var tabs = $(stage.selectedPanel.tabDiv).tabs();
 			var index = tabs.tabs("option", "active", 0);
 			tabs.tabs("refresh");
-			if(charPanel.groupXML == undefined) {
+			if (charPanel.groupXML == undefined) {
 				player.showCharacter(charPanel);
 			}
 		} else {
@@ -43,8 +43,6 @@ var toggleCharactersPanel = function(charPanel) {
 			dialogBoxes.close();
 		}
 	}
-
-	
 
 	for (var id in radio) {
 		if (radio[id].buttonDown) {
@@ -77,7 +75,7 @@ var addCharacterPanel = function(config) {
 
 	charPanel.diagrams = {};
 	charPanel.array = new Array();
-	if(config.noTab == undefined) {
+	if (config.noTab == undefined) {
 		var diagramId = "tabs-1";
 		charPanel.diagrams[diagramId] = new DiagramLayer(diagramId);
 		charPanel.diagrams[diagramId].label = "図1";
@@ -119,8 +117,8 @@ var addCharacterPanel = function(config) {
 		});
 		charPanel.add(rectPanel);
 		charPanel.rectPanel = rectPanel;
-		
-		if(config.noTab == undefined) {
+
+		if (config.noTab == undefined) {
 			toggleCharactersPanel(charPanel);
 		}
 		rectPanel.on('mouseover', function() {
@@ -175,18 +173,18 @@ var addCharacterPanel = function(config) {
 				var newCharPanel = characterPanels.pop();
 				characterPanels.splice(index + 1, 0, newCharPanel);
 				stage.get("#groupPanelBar")[0].refresh();
-				
+
 				/*var index = charPanel.getIndex();
-				var characterXML = charPanel.getXML();
-				console.log(characterXML);
-				var data = new Hash(stage.getObjectXML().getElementsByTagName("data"), "name");
-				var charName = (charPanel.oriName == undefined) ? charPanel.getId() : charPanel.oriName;
-				characterXML.attributes["name"].value = charName;
-				loadCharacter(characterXML, data);
-				
-				var newCharPanel = characterPanels.pop();
-				characterPanels.splice(index + 1, 0, newCharPanel);
-				stage.get("#groupPanelBar")[0].refresh();*/
+				 var characterXML = charPanel.getXML();
+				 console.log(characterXML);
+				 var data = new Hash(stage.getObjectXML().getElementsByTagName("data"), "name");
+				 var charName = (charPanel.oriName == undefined) ? charPanel.getId() : charPanel.oriName;
+				 characterXML.attributes["name"].value = charName;
+				 loadCharacter(characterXML, data);
+
+				 var newCharPanel = characterPanels.pop();
+				 characterPanels.splice(index + 1, 0, newCharPanel);
+				 stage.get("#groupPanelBar")[0].refresh();*/
 			},
 			onLoad : toolbar.onLoad
 		});
@@ -246,7 +244,7 @@ var addCharacterPanel = function(config) {
 
 	charPanel.removeSelf = function() {
 		delete player.sceneCharacters[charPanel.getId()];
-		
+
 		for (var i = 0; i < characterPanels.length; i++) {
 			if (characterPanels[i].getId() == charPanel.getId()) {
 				characterPanels.splice(i, 1);
@@ -287,7 +285,7 @@ var addGroupPanel = function(config) {
 	var m1 = 8;
 	var mText = 8;
 	var m3 = 5;
-	
+
 	var panelBar = stage.get('#groupPanelBar')[0];
 	var rectFunctionBar = stage.get('#rectFunctionBar')[0];
 	var rectMainPanel = stage.get('#rectMainPanel')[0];
@@ -295,14 +293,14 @@ var addGroupPanel = function(config) {
 	var posX = rectFunctionBar.getX() + rectFunctionBar.getWidth() + m;
 	var posY = rectFunctionBar.getY() + 20 + (60 + m1 * 2 + mText) * characterPanels.length;
 	var groupPanel = new Kinetic.Group({
-		id: config.id,
+		id : config.name,
 		x : posX,
 		y : posY,
 	});
-	
+
 	groupPanel.diagrams = {};
 	groupPanel.array = new Array();
-	if(config.noTab == undefined) {
+	if (config.noTab == undefined) {
 		var diagramId = "tabs-1";
 		groupPanel.diagrams[diagramId] = new DiagramLayer(diagramId);
 		groupPanel.diagrams[diagramId].get('#rectDiagramEditor')[0].off('mousedown');
@@ -313,7 +311,7 @@ var addGroupPanel = function(config) {
 	groupPanel.count = characterPanels.count++;
 	groupPanel.tabDiv = drawTabBar(groupPanel.count, config.noTab);
 	groupPanel.diagLabels = new Hashtable();
-	
+
 	var rect = new Kinetic.Rect({
 		width : 80 + m1 + 20,
 		height : 60 + m1 * 2 + mText,
@@ -327,7 +325,7 @@ var addGroupPanel = function(config) {
 
 	var rectPanel = new Kinetic.Rect({
 		id : 'rectPanel',
-		x: m1,
+		x : m1,
 		y : m1,
 		width : 80,
 		height : 60,
@@ -337,22 +335,22 @@ var addGroupPanel = function(config) {
 	});
 	groupPanel.add(rectPanel);
 	groupPanel.rectPanel = rectPanel;
-	
+
 	var groupXML = document.createElement("group");
 	$(groupXML).attr({
 		name : config.name
 	});
 	groupPanel.groupXML = groupXML;
 	
-	for(var i=0; i<config.characters.length; i++){
+	for (var i = 0; i < config.characters.length; i++) {
 		var characterImage = new Kinetic.Image({
-			x : m1 + m3 + (80- m3 * 2 - 200*0.2)/(config.characters.length  -1)*(i),
+			x : m1 + m3 + (80 - m3 * 2 - 200 * 0.2) / (config.characters.length - 1) * (i),
 			y : m1 + 150 * 0.2 / 2,
 			image : config.characters[i].img,
 			scale : 0.2,
 		});
 		groupPanel.add(characterImage);
-		
+
 		/** append xml */
 		var forkXML = document.createElement("fork");
 		var characterName = config.characters[i].name;
@@ -362,7 +360,7 @@ var addGroupPanel = function(config) {
 		});
 		$(groupPanel.groupXML).append(forkXML);
 	}
-	
+
 	var rectInvi = new Kinetic.Rect({
 		x : m1,
 		y : m1,
@@ -388,42 +386,42 @@ var addGroupPanel = function(config) {
 		$.extend(copiedResource, dialogBoxResources['group-create']);
 		copiedResource.title = 'グループ編集';
 		copiedResource.buttons[0].text = "ほぞん";
-		copiedResource.buttons[0].onClick = function(){
+		copiedResource.buttons[0].onClick = function() {
 			var characterImages = rectInvi.getParent().get('Image');
-			for(var i=0; i<characterImages.length; i++){
+			for (var i = 0; i < characterImages.length; i++) {
 				characterImages[i].remove();
 			}
-			
+
 			var groupName = this.getParent().textField.value;
 			if (stage.groups.isExistName(groupName)) {
 				alert(groupName + "が存在します。新名を入力してください。");
 				return;
 			}
-			
+
 			var groupCharacters = new Array();
 			var panels = this.getParent().panels.getChildren();
-			for(var i=0; i<panels.length; i++){
+			for (var i = 0; i < panels.length; i++) {
 				groupCharacters.push({
 					name : panels[i].config.name,
 					img : panels[i].getChildren()[1].getFillPatternImage()
 				});
 			}
-			
+
 			var groupXML = document.createElement("group");
 			$(groupXML).attr({
 				name : groupName
 			});
 			groupPanel.groupXML = groupXML;
-			
-			for(var i=0; i<groupCharacters.length; i++){
+
+			for (var i = 0; i < groupCharacters.length; i++) {
 				var characterImage = new Kinetic.Image({
-					x : m1 + m3 + (80- m3 * 2 - 200*0.2)/(groupCharacters.length  -1)*(i),
+					x : m1 + m3 + (80 - m3 * 2 - 200 * 0.2) / (groupCharacters.length - 1) * (i),
 					y : m1 + 150 * 0.2 / 2,
 					image : groupCharacters[i].img,
 					scale : 0.2,
 				});
 				groupPanel.add(characterImage);
-				
+
 				/** append xml */
 				var forkXML = document.createElement("fork");
 				var characterName = groupCharacters[i].name;
@@ -434,7 +432,7 @@ var addGroupPanel = function(config) {
 				$(groupPanel.groupXML).append(forkXML);
 			}
 			rectInvi.moveToTop();
-			groupPanel.draw();	
+			groupPanel.draw();
 			dialogBoxes.close();
 		};
 		copiedResource.callback = function() {
@@ -442,8 +440,8 @@ var addGroupPanel = function(config) {
 			layer.tooltips = new Array();
 		};
 		var dialogBox1 = new DialogBoxWithAddThumbnails(copiedResource);
-		
-		for(var i=0; i<groupPanel.groupXML.children.length; i++){
+
+		for (var i = 0; i < groupPanel.groupXML.children.length; i++) {
 			var fork = groupPanel.groupXML.children[i];
 			dialogBox1.addPanel({
 				name : fork.attributes["character"].value,
@@ -464,16 +462,16 @@ var addGroupPanel = function(config) {
 			}
 		};
 		/*addIcon({
-			x : m1 + 80,
-			y : m1 + 20 * 0,
-			source : 'img/mainPanel/edit1.png',
-			layer : toolbar,
-			id : 'characterRenameButton',
-			iconSize : 20,
-			onClick : function() {
-				var dialog = new DialogRenameCharacter(charPanel);
-			},
-			onLoad : toolbar.onLoad
+		x : m1 + 80,
+		y : m1 + 20 * 0,
+		source : 'img/mainPanel/edit1.png',
+		layer : toolbar,
+		id : 'characterRenameButton',
+		iconSize : 20,
+		onClick : function() {
+		var dialog = new DialogRenameCharacter(charPanel);
+		},
+		onLoad : toolbar.onLoad
 		});*/
 		/** to do */
 		addIcon({
@@ -485,27 +483,27 @@ var addGroupPanel = function(config) {
 			iconSize : 20,
 			onClick : function() {
 				/*var index = charPanel.getIndex();
-				var charName = (charPanel.oriName == undefined) ? charPanel.getId() : charPanel.oriName;
-				addCharacterPanel({
-					name : charName,
-					pathImage : charPanel.path,
-					pathModel : charPanel.modelPath
-				});
-				var newCharPanel = characterPanels.pop();
-				characterPanels.splice(index + 1, 0, newCharPanel);
-				stage.get("#groupPanelBar")[0].refresh();*/
-				
+				 var charName = (charPanel.oriName == undefined) ? charPanel.getId() : charPanel.oriName;
+				 addCharacterPanel({
+				 name : charName,
+				 pathImage : charPanel.path,
+				 pathModel : charPanel.modelPath
+				 });
+				 var newCharPanel = characterPanels.pop();
+				 characterPanels.splice(index + 1, 0, newCharPanel);
+				 stage.get("#groupPanelBar")[0].refresh();*/
+
 				/*var index = charPanel.getIndex();
-				var characterXML = charPanel.getXML();
-				console.log(characterXML);
-				var data = new Hash(stage.getObjectXML().getElementsByTagName("data"), "name");
-				var charName = (charPanel.oriName == undefined) ? charPanel.getId() : charPanel.oriName;
-				characterXML.attributes["name"].value = charName;
-				loadCharacter(characterXML, data);
-				
-				var newCharPanel = characterPanels.pop();
-				characterPanels.splice(index + 1, 0, newCharPanel);
-				stage.get("#groupPanelBar")[0].refresh();*/
+				 var characterXML = charPanel.getXML();
+				 console.log(characterXML);
+				 var data = new Hash(stage.getObjectXML().getElementsByTagName("data"), "name");
+				 var charName = (charPanel.oriName == undefined) ? charPanel.getId() : charPanel.oriName;
+				 characterXML.attributes["name"].value = charName;
+				 loadCharacter(characterXML, data);
+
+				 var newCharPanel = characterPanels.pop();
+				 characterPanels.splice(index + 1, 0, newCharPanel);
+				 stage.get("#groupPanelBar")[0].refresh();*/
 			},
 			onLoad : toolbar.onLoad
 		});
@@ -565,7 +563,7 @@ var addGroupPanel = function(config) {
 
 	groupPanel.removeSelf = function() {
 		delete player.sceneCharacters[groupPanel.getId()];
-		
+
 		for (var i = 0; i < characterPanels.length; i++) {
 			if (characterPanels[i].getId() == groupPanel.getId()) {
 				characterPanels.splice(i, 1);
@@ -625,18 +623,34 @@ stage.getXML = function() {
 	islay3d.appendChild(characterlist);
 
 	var grouplist = document.createElement("grouplist");
-	var group = document.createElement("group");
-	$(group).attr("name", "main");
-	grouplist.appendChild(group);
+	var groupMain = document.createElement("group");
+	$(groupMain).attr("name", "main");
+	grouplist.appendChild(groupMain);
 	for (var i = 0; i < characterPanels.length; i++) {
-		var fork = document.createElement("fork");
-		$(fork).attr({
-			character : characterPanels[i].getId(),
-			x : "0.000000",
-			y : "0.000000",
-			z : "0.000000",
-		});
-		group.appendChild(fork);
+		if (characterPanels[i].groupXML == undefined) {
+			var fork = document.createElement("fork");
+			$(fork).attr({
+				character : characterPanels[i].getId(),
+				x : "0.000000",
+				y : "0.000000",
+				z : "0.000000",
+			});
+			groupMain.appendChild(fork);
+		} else {
+			var groupNew = document.createElement("group");
+			$(groupNew).attr("name", characterPanels[i].groupXML.attributes["name"].value);
+			for (var j = 0; j < characterPanels[i].groupXML.children.length; j++) {
+				var fork = document.createElement("fork");
+				$(fork).attr({
+					character : characterPanels[i].groupXML.children[j].attributes["character"].value,
+					x : "0.000000",
+					y : "0.000000",
+					z : "0.000000",
+				});
+				groupNew.appendChild(fork);
+			}
+			grouplist.appendChild(groupNew);
+		}
 	}
 	islay3d.appendChild(grouplist);
 
