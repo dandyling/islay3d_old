@@ -303,6 +303,37 @@ var DialogBoxWithThumbnails = function(config) {
 		clip : [rect2.getX() + 1, rect2.getY() + 1, rect2.getWidth() - 2, rect2.getHeight() - 2]
 	});
 
+	
+	var inputDivParent = document.createElement("div");
+	document.body.appendChild(inputDivParent);
+	$(inputDivParent).css({
+		width : rect2.getWidth(),
+		height : 26,
+		//background: "green"
+	});
+	$(inputDivParent).offset({
+		left : rect2.getX(),
+		top : rect2.getY() + rect2.getHeight(),
+	});
+	dialogBox.inputDivParent = inputDivParent;
+		
+	var CheckBox = function(name, left, top, value, onChange) {
+		var check = document.createElement("input");
+		check.setAttribute("type", "checkbox");
+		check.setAttribute("id", name);
+		check.setAttribute("value", "0");
+		check.style.position = "absolute";
+		check.style.top = top + "px";
+		check.style.left = left + "px";
+		dialogBox.inputDivParent.appendChild(check);
+		if (value != undefined) {
+			check.checked = (value == "true") ? true : false;
+		}
+		check.onchange = onChange;
+		return check;
+	};
+	dialogBox.checkBox = new CheckBox('checkboxShowStartup', 20, 3, "true");
+	
 	rectInner.add(rect2);
 	rectInner.add(dialogBox.panels);
 	rectInner.add(dialogBox.scrollBar);

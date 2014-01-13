@@ -122,6 +122,7 @@ var createImportModelButton = function() {
 	dialog1.superDestroy = dialog1.destroy;
 	dialog1.destroy = function() {
 		dialog1.superDestroy();
+		document.body.removeChild(dialog1.inputDivParent);
 		$('#divfileupload').remove();
 	};
 };
@@ -219,7 +220,7 @@ dialogBoxResources['character-create'] = {
 			addCharacterPanel({
 				name : this.config.name,
 				pathImage : this.config.path,
-				pathModel : this.config.path.replace('png', 'dae')
+				pathModel : this.config.path.replace('png', 'dae'),
 			});
 
 			dialogBoxes.close();
