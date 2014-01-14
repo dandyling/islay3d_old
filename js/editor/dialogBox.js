@@ -514,7 +514,7 @@ var DialogBoxWithAddThumbnails = function(config) {
 
 	var setSelectThumbnails = function() {
 		for (var i = 0; i < characterPanels.length; i++) {
-			if(characterPanels[i].groupXML == undefined){
+			if(characterPanels[i].isGroup == undefined){
 				addSelectPanel({
 					name : characterPanels[i].getId(),
 					path : characterPanels[i].path,

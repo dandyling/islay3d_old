@@ -26,7 +26,7 @@ var toggleCharactersPanel = function(charPanel) {
 			var tabs = $(stage.selectedPanel.tabDiv).tabs();
 			var index = tabs.tabs("option", "active", 0);
 			tabs.tabs("refresh");
-			if (charPanel.groupXML == undefined) {
+			if (charPanel.isGroup == undefined) {
 				player.showCharacter(charPanel);
 			}
 		} else {
@@ -265,6 +265,7 @@ var addCharacterPanel = function(config) {
 		$(character).attr({
 			name : charPanel.getId(),
 			parts : config.name,
+			isShow : config.isShow,
 			rotation : "1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000"
 		});
 
@@ -297,6 +298,7 @@ var addGroupPanel = function(config) {
 		x : posX,
 		y : posY,
 	});
+	groupPanel.isGroup = true;
 
 	groupPanel.diagrams = {};
 	groupPanel.array = new Array();
@@ -335,30 +337,31 @@ var addGroupPanel = function(config) {
 	});
 	groupPanel.add(rectPanel);
 	groupPanel.rectPanel = rectPanel;
-
-	var groupXML = document.createElement("group");
-	$(groupXML).attr({
-		name : config.name
-	});
-	groupPanel.groupXML = groupXML;
+	
+	groupPanel.getXML = function(){
+		var group = document.createElement("group");
+		$(group).attr('name' , groupPanel.get('Text')[0]);
+		
+		var characterImages = groupPanel.get('Image');
+		for (var i = 0; i < characterImages.length; i++) {
+			var fork = document.createElement("fork");
+			$(fork).attr({
+				character : characterImages[i].getId(),
+				img : characterImages[i].getImage().src
+			});
+			$(group).append(fork);
+		}
+	};
 	
 	for (var i = 0; i < config.characters.length; i++) {
 		var characterImage = new Kinetic.Image({
+			id : "imgChar" + config.characters[i].name,
 			x : m1 + m3 + (80 - m3 * 2 - 200 * 0.2) / (config.characters.length - 1) * (i),
 			y : m1 + 150 * 0.2 / 2,
 			image : config.characters[i].img,
 			scale : 0.2,
 		});
 		groupPanel.add(characterImage);
-
-		/** append xml */
-		var forkXML = document.createElement("fork");
-		var characterName = config.characters[i].name;
-		$(forkXML).attr({
-			character : characterName,
-			img : config.characters[i].img.src
-		});
-		$(groupPanel.groupXML).append(forkXML);
 	}
 
 	var rectInvi = new Kinetic.Rect({
@@ -407,29 +410,15 @@ var addGroupPanel = function(config) {
 				});
 			}
 
-			var groupXML = document.createElement("group");
-			$(groupXML).attr({
-				name : groupName
-			});
-			groupPanel.groupXML = groupXML;
-
 			for (var i = 0; i < groupCharacters.length; i++) {
 				var characterImage = new Kinetic.Image({
+					id : groupCharacters[i].name,
 					x : m1 + m3 + (80 - m3 * 2 - 200 * 0.2) / (groupCharacters.length - 1) * (i),
 					y : m1 + 150 * 0.2 / 2,
 					image : groupCharacters[i].img,
 					scale : 0.2,
 				});
 				groupPanel.add(characterImage);
-
-				/** append xml */
-				var forkXML = document.createElement("fork");
-				var characterName = groupCharacters[i].name;
-				$(forkXML).attr({
-					character : characterName,
-					img : groupCharacters[i].img.src
-				});
-				$(groupPanel.groupXML).append(forkXML);
 			}
 			rectInvi.moveToTop();
 			groupPanel.draw();
@@ -441,8 +430,8 @@ var addGroupPanel = function(config) {
 		};
 		var dialogBox1 = new DialogBoxWithAddThumbnails(copiedResource);
 
-		for (var i = 0; i < groupPanel.groupXML.children.length; i++) {
-			var fork = groupPanel.groupXML.children[i];
+		for (var i = 0; i < groupPanel.getXML().children.length; i++) {
+			var fork = groupPanel.getXML().children[i];
 			dialogBox1.addPanel({
 				name : fork.attributes["character"].value,
 				path : fork.attributes["img"].value,
@@ -580,9 +569,6 @@ var addGroupPanel = function(config) {
 		}
 	};
 
-	groupPanel.getXML = function() {
-		return groupPanel.groupXML;
-	};
 	toggleCharactersPanel(groupPanel);
 
 	return groupPanel;
@@ -627,7 +613,7 @@ stage.getXML = function() {
 	$(groupMain).attr("name", "main");
 	grouplist.appendChild(groupMain);
 	for (var i = 0; i < characterPanels.length; i++) {
-		if (characterPanels[i].groupXML == undefined) {
+		if (characterPanels[i].isGroup == undefined) {
 			var fork = document.createElement("fork");
 			$(fork).attr({
 				character : characterPanels[i].getId(),
@@ -638,11 +624,11 @@ stage.getXML = function() {
 			groupMain.appendChild(fork);
 		} else {
 			var groupNew = document.createElement("group");
-			$(groupNew).attr("name", characterPanels[i].groupXML.attributes["name"].value);
-			for (var j = 0; j < characterPanels[i].groupXML.children.length; j++) {
+			$(groupNew).attr("name", characterPanels[i].getXML().attributes["name"].value);
+			for (var j = 0; j < characterPanels[i].getXML.children.length; j++) {
 				var fork = document.createElement("fork");
 				$(fork).attr({
-					character : characterPanels[i].groupXML.children[j].attributes["character"].value,
+					character : characterPanels[i].getXML.children[j].attributes["character"].value,
 					x : "0.000000",
 					y : "0.000000",
 					z : "0.000000",

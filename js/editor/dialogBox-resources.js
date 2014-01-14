@@ -221,6 +221,7 @@ dialogBoxResources['character-create'] = {
 				name : this.config.name,
 				pathImage : this.config.path,
 				pathModel : this.config.path.replace('png', 'dae'),
+				isShow : $('#checkboxShowStartup').val()
 			});
 
 			dialogBoxes.close();
