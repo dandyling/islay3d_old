@@ -303,7 +303,18 @@ var DialogBoxWithThumbnails = function(config) {
 		clip : [rect2.getX() + 1, rect2.getY() + 1, rect2.getWidth() - 2, rect2.getHeight() - 2]
 	});
 
-	
+	var simpleText = new Kinetic.Text({
+		x : rect2.getX() + rect2.getWidth()/2,
+		y : rect2.getY() + rect2.getHeight() + 7,
+		text : "ゲームスタートに表示する",
+		fontStyle : 'normal',
+		fontSize : 12,
+		fontFamily : 'sans-serif',
+		fill : 'black'
+	});
+	dialogBox.add(simpleText);
+	simpleText.setOffsetX(simpleText.getWidth()/2);
+		
 	var inputDivParent = document.createElement("div");
 	document.body.appendChild(inputDivParent);
 	$(inputDivParent).css({
@@ -316,7 +327,7 @@ var DialogBoxWithThumbnails = function(config) {
 		top : rect2.getY() + rect2.getHeight(),
 	});
 	dialogBox.inputDivParent = inputDivParent;
-		
+	
 	var CheckBox = function(name, left, top, value, onChange) {
 		var check = document.createElement("input");
 		check.setAttribute("type", "checkbox");
@@ -332,7 +343,9 @@ var DialogBoxWithThumbnails = function(config) {
 		check.onchange = onChange;
 		return check;
 	};
-	dialogBox.checkBox = new CheckBox('checkboxShowStartup', 20, 3, "true");
+	dialogBox.checkBox = new CheckBox('checkboxShowStartup', $(inputDivParent).width()/2 - simpleText.getWidth() / 2 - 20, 3, "true");
+	
+	
 	
 	rectInner.add(rect2);
 	rectInner.add(dialogBox.panels);
@@ -575,7 +588,7 @@ var DialogBoxWithAddThumbnails = function(config) {
 	//textField.setAttribute("placeholder", groupName);
 	textField.style.position = "absolute";
 	textField.style.top = "10px";
-	textField.style.left = (rect2.getWidth()/2 - 50) + "px";
+	textField.style.left = (rect2.getWidth()/2 - $(textField).width()/2) + "px";
 	dialogBox.textField = textField;
 	//
 	/*var imgEdit = stage.images['imgWhiteEdit'].clone();
@@ -760,6 +773,49 @@ var DialogBoxWithAddThumbnails = function(config) {
 		document.body.removeChild(dialogBox.inputDivParent);
 		dialogBox.superDestroy();
 	};
+	
+	var simpleText = new Kinetic.Text({
+		x : rect2.getX() + rect2.getWidth()/2,
+		y : rect2.getY() + rect2.getHeight() + 7,
+		text : "ゲームスタートに表示する",
+		fontStyle : 'normal',
+		fontSize : 12,
+		fontFamily : 'sans-serif',
+		fill : 'black'
+	});
+	dialogBox.add(simpleText);
+	simpleText.setOffsetX(simpleText.getWidth()/2);
+		
+	var inputDivParent2 = document.createElement("div");
+	document.body.appendChild(inputDivParent2);
+	$(inputDivParent2).css({
+		width : rect2.getWidth(),
+		height : 26,
+		//background: "green"
+	});
+	$(inputDivParent2).offset({
+		left : rect2.getX(),
+		top : rect2.getY() + rect2.getHeight(),
+	});
+	dialogBox.inputDivParent2 = inputDivParent2;
+	
+	var CheckBox = function(name, left, top, value, onChange) {
+		var check = document.createElement("input");
+		check.setAttribute("type", "checkbox");
+		check.setAttribute("id", name);
+		check.setAttribute("value", "0");
+		check.style.position = "absolute";
+		check.style.top = top + "px";
+		check.style.left = left + "px";
+		dialogBox.inputDivParent2.appendChild(check);
+		if (value != undefined) {
+			check.checked = (value == "true") ? true : false;
+		}
+		check.onchange = onChange;
+		return check;
+	};
+	dialogBox.checkBox = new CheckBox('checkboxShowStartup', $(inputDivParent2).width()/2 - simpleText.getWidth() / 2 - 20, 3, "true");
+	
 
 	dialogBox.add(rect2);
 	dialogBox.add(simpleText);

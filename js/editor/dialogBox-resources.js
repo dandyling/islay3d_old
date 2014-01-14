@@ -264,11 +264,11 @@ dialogBoxResources['group-create'] = {
 			
 			addGroupPanel({
 				name : groupName,
-				isShow : $('#checkboxShowStartup').val(),
+				//isShow : $('#checkboxShowStartup').val(),
 				characters : groupCharacters
 			});
 					
-			dialogBoxes.close();
+			//dialogBoxes.close();
 		}
 	}, {
 		x : Math.round(window.innerWidth / 2 - 630 / 2) + 15,
