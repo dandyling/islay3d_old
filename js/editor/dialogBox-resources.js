@@ -248,12 +248,14 @@ dialogBoxResources['group-create'] = {
 		isMain : true,
 		onClick : function() {
 			var groupName = this.getParent().textField.value;
-			if (stage.groups.isExistName(groupName)) {
+			console.log(groupName)
+			/*if (stage.groups.isExistName(groupName)) {
 				alert(groupName + "が存在します。新名を入力してください。");
 				return;
 			}
+			console.log('here');*/
 			
-			var groupCharacters = new Array();
+			/*var groupCharacters = new Array();
 			var panels = this.getParent().panels.getChildren();
 			for(var i=0; i<panels.length; i++){
 				groupCharacters.push({
@@ -266,7 +268,7 @@ dialogBoxResources['group-create'] = {
 				name : groupName,
 				//isShow : $('#checkboxShowStartup').val(),
 				characters : groupCharacters
-			});
+			});*/
 					
 			//dialogBoxes.close();
 		}
