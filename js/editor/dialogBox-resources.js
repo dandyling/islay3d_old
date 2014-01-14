@@ -264,6 +264,7 @@ dialogBoxResources['group-create'] = {
 			
 			addGroupPanel({
 				name : groupName,
+				isShow : $('#checkboxShowStartup').val(),
 				characters : groupCharacters
 			});
 					
@@ -329,7 +330,8 @@ dialogBoxResources['character-import-model'] = {
 				addCharacterPanel({
 					name : modelName,
 					pathImage : "img/na.png",
-					pathModel : "users/" + stage.pid + "/models/" + modelName + ".dae"
+					pathModel : "users/" + stage.pid + "/models/" + modelName + ".dae",
+					isShow : true
 				});
 				$.ajax({
 					type : "POST",

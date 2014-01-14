@@ -72,6 +72,8 @@ var addCharacterPanel = function(config) {
 	});
 	charPanel.path = config.pathImage;
 	charPanel.modelPath = config.pathModel;
+	charPanel.parts = config.name;
+	charPanel.isShow = config.isShow;
 
 	charPanel.diagrams = {};
 	charPanel.array = new Array();
@@ -168,7 +170,8 @@ var addCharacterPanel = function(config) {
 				addCharacterPanel({
 					name : charName,
 					pathImage : charPanel.path,
-					pathModel : charPanel.modelPath
+					pathModel : charPanel.modelPath,
+					isShow : charPanel.isShow
 				});
 				var newCharPanel = characterPanels.pop();
 				characterPanels.splice(index + 1, 0, newCharPanel);
@@ -264,14 +267,12 @@ var addCharacterPanel = function(config) {
 		var character = document.createElement("character");
 		$(character).attr({
 			name : charPanel.getId(),
-			parts : config.name,
-			isShow : config.isShow,
+			parts : charPanel.parts,
 			rotation : "1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000"
 		});
 
 		for (var a in charPanel.diagrams) {
 			var statediagram = charPanel.diagrams[a].getXML();
-			//console.log(a, charPanel.diagrams[a].getXML);
 			character.appendChild(statediagram);
 		}
 
@@ -299,6 +300,7 @@ var addGroupPanel = function(config) {
 		y : posY,
 	});
 	groupPanel.isGroup = true;
+	groupPanel.isShow = config.isShow;
 
 	groupPanel.diagrams = {};
 	groupPanel.array = new Array();
@@ -420,6 +422,8 @@ var addGroupPanel = function(config) {
 				});
 				groupPanel.add(characterImage);
 			}
+			
+			groupPanel.isShow = $('#checkboxShowStartup').val();
 			rectInvi.moveToTop();
 			groupPanel.draw();
 			dialogBoxes.close();
@@ -476,7 +480,8 @@ var addGroupPanel = function(config) {
 				 addCharacterPanel({
 				 name : charName,
 				 pathImage : charPanel.path,
-				 pathModel : charPanel.modelPath
+				 pathModel : charPanel.modelPath,
+				 isShow : charPanel.isShow
 				 });
 				 var newCharPanel = characterPanels.pop();
 				 characterPanels.splice(index + 1, 0, newCharPanel);
@@ -603,8 +608,10 @@ stage.getXML = function() {
 
 	var characterlist = document.createElement("characterlist");
 	for (var i = 0; i < characterPanels.length; i++) {
-		var character = characterPanels[i].getXML();
-		characterlist.appendChild(character);
+		if(characterPanels[i].isGroup == undefined) {
+			var character = characterPanels[i].getXML();
+			characterlist.appendChild(character);
+		}
 	}
 	islay3d.appendChild(characterlist);
 
@@ -613,6 +620,10 @@ stage.getXML = function() {
 	$(groupMain).attr("name", "main");
 	grouplist.appendChild(groupMain);
 	for (var i = 0; i < characterPanels.length; i++) {
+		if(characterPanels[i].isShow == false){
+			break;
+		}
+		
 		if (characterPanels[i].isGroup == undefined) {
 			var fork = document.createElement("fork");
 			$(fork).attr({
@@ -625,10 +636,10 @@ stage.getXML = function() {
 		} else {
 			var groupNew = document.createElement("group");
 			$(groupNew).attr("name", characterPanels[i].getXML().attributes["name"].value);
-			for (var j = 0; j < characterPanels[i].getXML.children.length; j++) {
+			for (var j = 0; j < characterPanels[i].getXML().children.length; j++) {
 				var fork = document.createElement("fork");
 				$(fork).attr({
-					character : characterPanels[i].getXML.children[j].attributes["character"].value,
+					character : characterPanels[i].getXML().children[j].attributes["character"].value,
 					x : "0.000000",
 					y : "0.000000",
 					z : "0.000000",
